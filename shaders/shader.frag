@@ -78,5 +78,5 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
     float distance = length(lightPos - fragPos);
     float attenuation = 1.0f / (lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance);
 
-    return (ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) * diff * lightCol.y * attenuation + specular * spec * lightCol.z * attenuation);
+    return (ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) + specular * spec * lightCol.z * attenuation);
 }
