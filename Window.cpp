@@ -16,23 +16,13 @@ bool Window::rotateCarousel = false;
 bool Window::rotatePole = false;
 bool Window::rotateCar = false;
 
-Material* carouselMaterial;
-Material* groundMaterial;
-Material* poleMaterial;
-Material* carMaterial;
-
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
-Geometry* Window::carousel;
-Geometry* Window::ground;
-Geometry* Window::pole[6];
-Geometry* Window::car[6];
+Material* lobbyMaterial;
+Geometry* Window::lobby;
 
-Transform* Window::carouselTransform;
-Transform* Window::groundTransform;
-Transform* Window::poleTransform[6];
-Transform* Window::carTransform[6];
+Transform* Window::world;
 
 Cube* Window::skybox;
 Sphere* Window::discoball;
@@ -86,46 +76,15 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 	
-	carouselMaterial = new Material(glm::vec3(0.1745, 0.01175, 0.01175), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	groundMaterial = new Material(glm::vec3(0.1, 0.18725, 0.1745), glm::vec3(0.396, 0.74151, 0.69102), glm::vec3(0.297254, 0.30829, 0.306678), 0.1);
-	poleMaterial = new Material(glm::vec3(0.1, 0.1, 0.1), glm::vec3(1.0, 0.829, 0.829), glm::vec3(0.0, 0.0, 0.0), 0.088);
-	carMaterial = new Material(glm::vec3(0.329412, 0.223529, 0.027451), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.992157, 0.941176, 0.807843), 0.21794872);
-	
-	pointLight = new PointLight(glm::vec3(-8.5, -12.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-11.0, 3.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
-	// Set up carousel.
-	carouselTransform = new Transform();
-	carouselTransform->translate(glm::vec3(0.0, -4.0, 0.0));
-	carousel = new Geometry("cone.obj", 3.0f, pointSize, normalColoring, carouselMaterial);
-	carouselTransform->addChild(carousel);
-
-	// Set up ground.
-	groundTransform = new Transform();
-	groundTransform->translate(glm::vec3(0.0, 3.0, 0.0));
-	ground = new Geometry("cube.obj", 35.0f, pointSize, normalColoring, groundMaterial);
-	groundTransform->addChild(ground);
-	carouselTransform->addChild(groundTransform);
-
-	// Set up rides.
-	for (unsigned i = 0; i < 6; i++) {
-		poleTransform[i] = new Transform();
-		glm::vec3 offset = glm::vec3(0, -2.0, 3.0);
-		float radians = glm::radians(360.0f * ((i + 1.0f) / 6));
-		glm::vec3 position = glm::vec3(offset.x * cos(radians) + offset.z * sin(radians), offset.y, offset.x * sin(radians) - offset.z * cos(radians));
-		poleTransform[i]->translate(position);
-		poleTransform[i]->rotate(90.0f, glm::vec3(1.0, 0.0, 0.0));
-		poleTransform[i]->rotate(360.0f * ((i + 1.0f) / 6), glm::vec3(0.0, 1.0, 0.0));
-		pole[i] = new Geometry("cylinder.obj", 2.0, pointSize, normalColoring, poleMaterial);
-		poleTransform[i]->addChild(pole[i]);
-
-		carTransform[i] = new Transform();
-		car[i] = new Geometry("cube.obj", 2.0, pointSize, normalColoring, carMaterial);
-		carTransform[i]->addChild(car[i]);
-
-		poleTransform[i]->addChild(carTransform[i]);
-		carouselTransform->addChild(poleTransform[i]);
-	}
+	// Set up lobby.
+	world = new Transform();
+	world->rotate(glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
+	lobbyMaterial = new Material(glm::vec3(0.1745, 0.01175, 0.01175), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	lobby = new Geometry("amongus_lobby.obj", 0.3f, pointSize, normalColoring, lobbyMaterial);
+	world->addChild(lobby);
 
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
@@ -135,27 +94,13 @@ bool Window::initializeObjects()
 
 void Window::cleanUp()
 {
-	delete groundMaterial;
-	delete carouselMaterial;
-	delete poleMaterial;
-	delete carMaterial;
-
 	delete pointLight;
 	delete lightSource;
 
-	delete carousel;
-	delete ground;
-	for (unsigned i = 0; i < 6; i++) {
-		delete pole[i];
-		delete car[i];
-	}
+	delete lobbyMaterial;
+	delete lobby;
 
-	delete carouselTransform;
-	delete groundTransform;
-	for (unsigned i = 0; i < 6; i++) {
-		delete poleTransform[i];
-		delete carTransform[i];
-	}
+	delete world;
 
 	delete skybox;
 	delete discoball;
@@ -243,22 +188,11 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	if (rotateCarousel) {
-		carouselTransform->update();
-		groundTransform->rotate(-0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
+		world->update();
 		carouselPos = glm::vec3(glm::rotate(glm::mat4(1.0f), 0.0002f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselPos, 1));
 		carouselLookAtPoint = glm::vec3(glm::rotate(glm::mat4(1.0f), glm::degrees(0.0002f), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselLookAtPoint, 1));
 		if (carouselView)
 			view = glm::lookAt(carouselPos, carouselLookAtPoint, upVector);
-	}
-	if (rotatePole) {
-		for (unsigned i = 0; i < 6; i++) {
-			poleTransform[i]->update();
-		}
-	}
-	if (rotateCar) {
-		for (unsigned i = 0; i < 6; i++) {
-			carTransform[i]->update();
-		}
 	}
 }
 
@@ -266,17 +200,6 @@ void Window::displayCallback(GLFWwindow* window)
 {	
 	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	skybox->draw(view, projection, skyboxShaderProgram);
-	glDisable(GL_CULL_FACE);
- 
-	glUseProgram(shaderProgram);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	discoball->draw(shaderProgram, glm::mat4(1.0));
-	glUseProgram(0);
 
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -287,7 +210,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	carouselTransform->draw(shaderProgram, glm::mat4(1.0));
+	world->draw(shaderProgram, glm::mat4(1.0));
 	glUseProgram(0);
 
 	// Gets events, including input such as keyboard and mouse or window resizing

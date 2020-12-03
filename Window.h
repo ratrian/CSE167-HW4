@@ -24,15 +24,9 @@ public:
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
-	static Geometry* carousel;
-	static Geometry* ground;
-	static Geometry* pole[6];
-	static Geometry* car[6];
+	static Geometry* lobby;
 
-	static Transform* carouselTransform;
-	static Transform* groundTransform;
-	static Transform* poleTransform[6];
-	static Transform* carTransform[6];
+	static Transform* world;
 	
 	static Cube* skybox;
 	static Sphere* discoball;
