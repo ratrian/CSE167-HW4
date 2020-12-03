@@ -1,4 +1,5 @@
 #include "Geometry.h"
+#include "stb_image.h"
 
 Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSize, GLfloat normalColoring, Material* material)
 	: pointSize(pointSize), normalColoring(normalColoring), material(material)
@@ -186,6 +187,31 @@ Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSi
 	// Unbind the VBO/VAO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	if (objFilename.compare("amongus_lobby.obj") == 0) {
+		unsigned int textureID;
+		glGenTextures(1, &textureID);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+
+		string textureFilename = "amongus_lobby.png";
+		int width, height, nrChannels;
+		unsigned char* data;
+		stbi_set_flip_vertically_on_load(true);
+		data = stbi_load(textureFilename.c_str(), &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			stbi_image_free(data);
+		}
+		else
+		{
+			std::cout << "Cubemap tex failed to load at path: " << textureFilename << std::endl;
+			stbi_image_free(data);
+		}
+		lobbyTexture = textureID;
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }
 
 Geometry::~Geometry() 
@@ -211,6 +237,9 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 
 	// Bind the VAO
 	glBindVertexArray(VAO);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, lobbyTexture);
 
 	// Draw the points using triangles, indexed with the EBO
 	glDrawElements(GL_TRIANGLES, sizeof(glm::vec3) * points.size(), GL_UNSIGNED_INT, 0);

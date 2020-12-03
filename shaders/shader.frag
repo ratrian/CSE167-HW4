@@ -15,6 +15,7 @@ uniform vec3 lightAtten;
 
 uniform vec3 cameraPos;
 uniform samplerCube skybox;
+uniform sampler2D lobbyTexture;
 
 // Inputs to the fragment shader are the outputs of the same name from the vertex shader.
 // Note that you do not have access to the vertex shader's default output, gl_Position.
@@ -77,5 +78,5 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
     float distance = length(lightPos - fragPos);
     float attenuation = 1.0f / (lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance);
 
-    return (ambient * lightCol.x + diffuse * diff * lightCol.y * attenuation + specular * spec * lightCol.z * attenuation);
+    return (ambient * lightCol.x + texture(lobbyTexture, texcoordOutput) * diff * lightCol.y * attenuation + specular * spec * lightCol.z * attenuation);
 }

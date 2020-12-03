@@ -23,7 +23,7 @@ private:
 	std::vector<glm::vec3> normals;
 	std::vector<glm::ivec3> indices;
 
-	GLuint VAO, VBO, TBO, NBO, EBO;
+	GLuint VAO, VBO, TBO, NBO, EBO, lobbyTexture;
 	
 	GLfloat pointSize, normalColoring;
 	Material* material;
