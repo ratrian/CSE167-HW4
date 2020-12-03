@@ -76,14 +76,14 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 	
-	pointLight = new PointLight(glm::vec3(-11.0, 3.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-17.0, 7.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up lobby.
 	world = new Transform();
 	world->rotate(glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
-	lobbyMaterial = new Material(glm::vec3(0.1745, 0.01175, 0.01175), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	lobby = new Geometry("amongus_lobby.obj", 0.3f, pointSize, normalColoring, lobbyMaterial);
+	lobbyMaterial = new Material(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	lobby = new Geometry("amongus_lobby.obj", 0.5f, pointSize, normalColoring, lobbyMaterial);
 	world->addChild(lobby);
 
 	skybox = new Cube(1000);
