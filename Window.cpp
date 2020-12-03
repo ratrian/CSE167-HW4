@@ -6,7 +6,7 @@ int Window::height;
 const char* Window::windowTitle = "GLFW Starter Project";
 
 bool Window::activated = false;
-bool Window::actionSkybox = true;
+bool Window::actionLobby = true;
 bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
 
@@ -237,19 +237,19 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			break;
 
 		case GLFW_KEY_L:
-			actionSkybox = !actionSkybox;
+			actionLobby = !actionLobby;
 			actionLightSource = !actionLightSource;
 			break;
 		case GLFW_KEY_V:
 			carouselView = !carouselView;
 			if (carouselView)
 			{
-				actionSkybox = false;
+				actionLobby = false;
 				view = glm::lookAt(carouselPos, carouselLookAtPoint, upVector);
 			}
 			else
 			{
-				actionSkybox = true;
+				actionLobby = true;
 				view = glm::lookAt(eyePos, lookAtPoint, upVector);
 			}
 			break;
@@ -294,7 +294,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 		float velocity = glm::length(direction);
 		if (velocity > 0.0001)
 		{
-			if (actionSkybox)
+			if (actionLobby)
 			{
 				eyePos.y += direction.y;
 				eyePos.z += direction.x;
@@ -316,7 +316,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 void Window::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	glMatrixMode(GL_PROJECTION);
-	if (actionSkybox)
+	if (actionLobby)
 	{
 		glm::mat4 mT = glm::translate(glm::mat4(1.0), -eyePos);
 		glm::mat4 mR = glm::rotate(glm::mat4(1.0), glm::degrees(GLfloat(yOffset * 0.001)), glm::vec3(0.0, 1.0, 0.0));
