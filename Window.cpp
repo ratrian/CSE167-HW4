@@ -97,19 +97,24 @@ bool Window::initializeObjects()
 	// Set up astronauts.
 	for (unsigned i = 0; i < 10; i++) {
 		astroStillTransform[i] = new Transform();
+		astroStillTransform[i]->translate(glm::vec3(-13.0f + float(i * 3), 0.0f, 0.0f));
+
 		astroMoving1Transform[i] = new Transform();
+		astroMoving1Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), 0.0f, 0.0f));
+
 		astroMoving2Transform[i] = new Transform();
+		astroMoving2Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), 0.0f, 0.0f));
 	}
-	astroMaterial[0] = new Material(glm::vec3(62/256, 71/256, 78/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[1] = new Material(glm::vec3(19/256, 46/256, 209/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[2] = new Material(glm::vec3(113/256, 73/256, 29/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[3] = new Material(glm::vec3(78/256, 239/256, 56/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[4] = new Material(glm::vec3(241/256, 125/256, 12/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[5] = new Material(glm::vec3(236/256, 84/256, 187/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[6] = new Material(glm::vec3(108/256, 47/256, 188/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[7] = new Material(glm::vec3(197/256, 18/256, 17/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[8] = new Material(glm::vec3(214/256, 223/256, 241/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[9] = new Material(glm::vec3(246/256, 246/256, 87/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[0] = new Material(glm::vec3(float(62/256), float(71/256), float(78/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[1] = new Material(glm::vec3(float(19/256), float(46/256), float(209/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[2] = new Material(glm::vec3(float(113/256), float(73/256), float(29/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[3] = new Material(glm::vec3(float(78/256), float(239/256), float(56/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[4] = new Material(glm::vec3(float(241/256), float(125/256), float(12/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[5] = new Material(glm::vec3(float(236/256), float(84/256), float(187/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[6] = new Material(glm::vec3(float(108/256), float(47/256), float(188/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[7] = new Material(glm::vec3(float(197/256), float(18/256), float(17/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[8] = new Material(glm::vec3(float(214/256), float(223/256), float(241/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[9] = new Material(glm::vec3(float(246/256), float(246/256), float(87/256)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	for (unsigned i = 0; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
 		astroStillTransform[i]->addChild(astroStill[i]);
@@ -117,11 +122,11 @@ bool Window::initializeObjects()
 
 		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.1f, pointSize, normalColoring, astroMaterial[i]);
 		astroMoving1Transform[i]->addChild(astroMoving1[i]);
-		lobbyTransform->addChild(astroMoving1Transform[i]);
+		//lobbyTransform->addChild(astroMoving1Transform[i]);
 
 		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.1f, pointSize, normalColoring, astroMaterial[i]);
 		astroMoving2Transform[i]->addChild(astroMoving2[i]);
-		lobbyTransform->addChild(astroMoving2Transform[i]);
+		//lobbyTransform->addChild(astroMoving2Transform[i]);
 	}
 
 	skybox = new Cube(1000);
