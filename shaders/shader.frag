@@ -74,5 +74,33 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
     float distance = length(lightPos - fragPos);
     float attenuation = 1.0f / (lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance);
 
-    return (ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) + specular * spec * lightCol.z * attenuation);
+    vec3 color = ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) + specular * spec * lightCol.z * attenuation;
+    if (drawAstro == 1.0) {
+        float intensity = diff * spec;
+        if (intensity > 0.95)
+        {
+            color.x *= 1.0;
+            color.y *= 1.0;
+            color.z *= 1.0;
+        }
+        else if (intensity > 0.5)
+        {
+            color.x *= 0.7;
+            color.y *= 0.7;
+            color.z *= 0.7;
+        }
+        else if (intensity > 0.05)
+        {
+            color.x *= 0.35;
+            color.y *= 0.35;
+            color.z *= 0.35;
+        }
+        else
+        {
+            color.x *= 0.1;
+            color.y *= 0.1;
+            color.z *= 0.1;
+        }
+    }
+    return color;
 }
