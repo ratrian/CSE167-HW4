@@ -1,8 +1,8 @@
 #version 330 core
 
+uniform float drawAstro;
 uniform float drawDiscoball;
-uniform float normalColoring;
-uniform float drawSphere;
+uniform float drawLightSource;
 
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -41,26 +41,22 @@ void main()
     {
         vec3 norm = normalize(normalOutput);
 
-        if (drawSphere == 1.0)
+        if (drawLightSource == 1.0)
+            fragColor = vec4(lightCol, 1.0);
+        else if (drawLightSource == 0.0)
         {
-            if (normalColoring == 1.0)
-                fragColor = vec4(vec3(0.0), 1.0);
-            else if (normalColoring == 0.0)
-                fragColor = vec4(lightCol, 1.0);
-        }
-        else if (drawSphere == 0.0)
-        {
-            if (normalColoring == 1.0)
+            vec3 viewDir = normalize(posOutput);
+            vec3 result = CalcPointLight(posOutput, norm, viewDir);
+            if (drawAstro == 1.0)
             {
-                norm = 0.5 * norm + 0.5;
-                fragColor = vec4(norm, 1.0);
+                float edge = max(0, dot(norm, viewDir));
+                if (edge < 0.01)
+                    fragColor = vec4(0.0);
+                else
+                    fragColor = vec4(result, 1.0);
             }
-            else if (normalColoring == 0.0)
-            {
-                vec3 viewDir = normalize(posOutput);
-                vec3 result = CalcPointLight(posOutput, norm, viewDir);
+            else if (drawAstro == 0.0)
                 fragColor = vec4(result, 1.0);
-            }
         }
     }
 }

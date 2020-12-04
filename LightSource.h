@@ -24,7 +24,7 @@ private:
 
 	GLuint VAO, VBO, NBO, EBO;
 
-	GLfloat pointSize, normalColoring;
+	GLfloat pointSize;
 
 	PointLight* pointLight;
 

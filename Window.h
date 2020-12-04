@@ -37,8 +37,6 @@ public:
 	static Cube* skybox;
 	static Sphere* discoball;
 
-	static GLfloat normalColoring;
-
 	// Camera Matrices
 	static glm::mat4 projection;
 	static glm::mat4 view;

@@ -25,18 +25,17 @@ private:
 
 	GLuint VAO, VBO, TBO, NBO, EBO, lobbyTexture;
 	
-	GLfloat pointSize, normalColoring;
+	GLfloat pointSize, drawAstro;
 	Material* material;
 
 public:
-	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat normalColoring, Material* material);
+	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat drawAstro, Material* material);
 	~Geometry();
 	
 	void draw(GLuint shaderProgram, glm::mat4 C);
 	void update();
 
 	void updatePointSize(GLfloat size);
-	void updateNormalColoring(GLfloat normalColoring);
 };
 
 #endif
