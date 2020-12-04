@@ -9,6 +9,7 @@ uniform vec3 diffuse;
 uniform vec3 specular;
 uniform float shininess;
 
+uniform vec3 lightDir;
 uniform vec3 lightPos;
 uniform vec3 lightCol;
 uniform vec3 lightAtten;
@@ -26,6 +27,7 @@ in vec3 normalOutput;
 // You can output many things. The first vec4 type output determines the color of the fragment
 out vec4 fragColor;
 
+vec3 CalcDirLight(vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir);
 
 void main()
@@ -61,14 +63,57 @@ void main()
     }
 }
 
+// Calculates the color when using a directional light.
+vec3 CalcDirLight(vec3 normal, vec3 viewDir)
+{
+    vec3 unitLightDir = normalize(-lightDir);
+    // Diffuse shading
+    float diff = max(dot(normal, unitLightDir), 0.0);
+    // Specular shading
+    vec3 reflectDir = reflect(-unitLightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+
+    if (drawAstro == 1.0) {
+        vec3 color = ambient * lightCol.x + diffuse * diff * lightCol.y + specular * spec * lightCol.z;
+        float intensity = diff * spec;
+        if (intensity > 0.95)
+        {
+            color.x *= 1.0;
+            color.y *= 1.0;
+            color.z *= 1.0;
+        }
+        else if (intensity > 0.5)
+        {
+            color.x *= 0.7;
+            color.y *= 0.7;
+            color.z *= 0.7;
+        }
+        else if (intensity > 0.05)
+        {
+            color.x *= 0.35;
+            color.y *= 0.35;
+            color.z *= 0.35;
+        }
+        else
+        {
+            color.x *= 0.1;
+            color.y *= 0.1;
+            color.z *= 0.1;
+        }
+        return color;
+    }
+    vec3 color = ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) + specular * spec * lightCol.z;
+    return color;
+}
+
 // Calculates the color when using a point light.
 vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
 {
-    vec3 lightDir = normalize(lightPos - fragPos);
+    vec3 unitLightDir = normalize(lightPos - fragPos);
     // Diffuse shading
-    float diff = max(dot(normal, lightDir), 0.0);
+    float diff = max(dot(normal, unitLightDir), 0.0);
     // Specular shading
-    vec3 reflectDir = reflect(-lightDir, normal);
+    vec3 reflectDir = reflect(-unitLightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     // Attenuation
     float distance = length(lightPos - fragPos);

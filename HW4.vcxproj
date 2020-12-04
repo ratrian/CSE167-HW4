@@ -101,6 +101,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="DirLight.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="LightSource.cpp" />
     <ClCompile Include="main.cpp" />
@@ -113,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="DirLight.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="main.h" />
