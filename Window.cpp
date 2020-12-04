@@ -109,16 +109,16 @@ bool Window::initializeObjects()
 
 		currAstroTransform[i] = astroStillTransform[i];
 	}
-	astroMaterial[0] = new Material(glm::vec3(float(62/255), float(71/255), float(78/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[1] = new Material(glm::vec3(float(19/255), float(46/255), float(209/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[2] = new Material(glm::vec3(float(113/255), float(73/255), float(29/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[3] = new Material(glm::vec3(float(78/255), float(239/255), float(56/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[4] = new Material(glm::vec3(float(241/255), float(125/255), float(12/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[5] = new Material(glm::vec3(float(236/255), float(84/255), float(187/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[6] = new Material(glm::vec3(float(108/255), float(47/255), float(188/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[7] = new Material(glm::vec3(float(197/255), float(18/255), float(17/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[8] = new Material(glm::vec3(float(214/255), float(223/255), float(241/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	astroMaterial[9] = new Material(glm::vec3(float(246/255), float(246/255), float(87/255)), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[0] = new Material(glm::vec3(62.0f/255.0f, 71.0f/255.0f, 78.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[1] = new Material(glm::vec3(19.0f/255.0f, 46.0f/255.0f, 209.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[2] = new Material(glm::vec3(113.0f/255.0f, 73.0f/255.0f, 29.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[3] = new Material(glm::vec3(78.0f/255.0f, 239.0f/255.0f, 56.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[4] = new Material(glm::vec3(241.0f/255.0f, 125.0f/255.0f, 12.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[5] = new Material(glm::vec3(236.0f/255.0f, 84.0f/255.0f, 187.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[6] = new Material(glm::vec3(108.0f/255.0f, 47.0f/255.0f, 188.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[7] = new Material(glm::vec3(197.0f/255.0f, 18.0f/255.0f, 17.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[8] = new Material(glm::vec3(214.0f/255.0f, 223.0f/255.0f, 241.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[9] = new Material(glm::vec3(246.0f/255.0f, 246.0f/255.0f, 87.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	for (unsigned i = 0; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
 		astroStillTransform[i]->addChild(astroStill[i]);
