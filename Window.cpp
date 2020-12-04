@@ -92,11 +92,20 @@ bool Window::initializeObjects()
 	world->addChild(lobby);
 
 	// Set up astronauts.
+	astroMaterial[0] = new Material(glm::vec3(62/256, 71/256, 78/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[1] = new Material(glm::vec3(19/256, 46/256, 209/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[2] = new Material(glm::vec3(113/256, 73/256, 29/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[3] = new Material(glm::vec3(78/256, 239/256, 56/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[4] = new Material(glm::vec3(241/256, 125/256, 12/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[5] = new Material(glm::vec3(236/256, 84/256, 187/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[6] = new Material(glm::vec3(108/256, 47/256, 188/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[7] = new Material(glm::vec3(197/256, 18/256, 17/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[8] = new Material(glm::vec3(214/256, 223/256, 241/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
+	astroMaterial[9] = new Material(glm::vec3(246/256, 246/256, 87/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	for (unsigned i = 0; i < 10; i++) {
-		//astroMaterial[i] = new Material();
-		//astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
-		//astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
-		//astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
 	}
 
 	skybox = new Cube(1000);
