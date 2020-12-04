@@ -24,7 +24,10 @@ public:
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
-	static Transform* world;
+	static Transform* lobbyTransform;
+	static Transform* astroStillTransform[10];
+	static Transform* astroMoving1Transform[10];
+	static Transform* astroMoving2Transform[10];
 
 	static Geometry* lobby;
 	static Geometry* astroStill[10];

@@ -19,6 +19,11 @@ bool Window::rotateCar = false;
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
+Transform* Window::lobbyTransform;
+Transform* Window::astroStillTransform[10];
+Transform* Window::astroMoving1Transform[10];
+Transform* Window::astroMoving2Transform[10];
+
 Material* lobbyMaterial;
 Geometry* Window::lobby;
 
@@ -26,8 +31,6 @@ Material* astroMaterial[10];
 Geometry* Window::astroStill[10];
 Geometry* Window::astroMoving1[10];
 Geometry* Window::astroMoving2[10];
-
-Transform* Window::world;
 
 Cube* Window::skybox;
 Sphere* Window::discoball;
@@ -85,13 +88,18 @@ bool Window::initializeObjects()
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up lobby.
-	world = new Transform();
-	world->rotate(glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
+	lobbyTransform = new Transform();
+	lobbyTransform->rotate(glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
 	lobbyMaterial = new Material(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	lobby = new Geometry("amongus_lobby.obj", 0.5f, pointSize, normalColoring, lobbyMaterial);
-	world->addChild(lobby);
+	lobbyTransform->addChild(lobby);
 
 	// Set up astronauts.
+	for (unsigned i = 0; i < 10; i++) {
+		astroStillTransform[i] = new Transform();
+		astroMoving1Transform[i] = new Transform();
+		astroMoving2Transform[i] = new Transform();
+	}
 	astroMaterial[0] = new Material(glm::vec3(62/256, 71/256, 78/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	astroMaterial[1] = new Material(glm::vec3(19/256, 46/256, 209/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	astroMaterial[2] = new Material(glm::vec3(113/256, 73/256, 29/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
@@ -104,8 +112,16 @@ bool Window::initializeObjects()
 	astroMaterial[9] = new Material(glm::vec3(246/256, 246/256, 87/256), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	for (unsigned i = 0; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
-		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
-		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+		astroStillTransform[i]->addChild(astroStill[i]);
+		lobbyTransform->addChild(astroStillTransform[i]);
+
+		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.1f, pointSize, normalColoring, astroMaterial[i]);
+		astroMoving1Transform[i]->addChild(astroMoving1[i]);
+		lobbyTransform->addChild(astroMoving1Transform[i]);
+
+		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.1f, pointSize, normalColoring, astroMaterial[i]);
+		astroMoving2Transform[i]->addChild(astroMoving2[i]);
+		lobbyTransform->addChild(astroMoving2Transform[i]);
 	}
 
 	skybox = new Cube(1000);
@@ -119,7 +135,13 @@ void Window::cleanUp()
 	delete pointLight;
 	delete lightSource;
 
-	delete world;
+	delete lobbyTransform;
+
+	for (unsigned i = 0; i < 10; i++) {
+		delete astroStillTransform[i];
+		delete astroMoving1Transform[i];
+		delete astroMoving2Transform[i];
+	}
 
 	delete lobbyMaterial;
 	delete lobby;
@@ -217,7 +239,7 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	if (rotateCarousel) {
-		world->update();
+		lobbyTransform->update();
 		carouselPos = glm::vec3(glm::rotate(glm::mat4(1.0f), 0.0002f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselPos, 1));
 		carouselLookAtPoint = glm::vec3(glm::rotate(glm::mat4(1.0f), glm::degrees(0.0002f), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselLookAtPoint, 1));
 		if (carouselView)
@@ -239,7 +261,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	world->draw(shaderProgram, glm::mat4(1.0));
+	lobbyTransform->draw(shaderProgram, glm::mat4(1.0));
 	glUseProgram(0);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
@@ -326,7 +348,7 @@ void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 			float rotAngle = velocity * 0.05;
 			glm::vec3 rotAxis = glm::cross(lastPoint, currPoint);
 			if (actionLobby)
-				world->rotate(rotAngle, rotAxis);
+				lobbyTransform->rotate(rotAngle, rotAxis);
 			if (actionLightSource)
 				lightSource->orbit(direction, rotAngle, rotAxis);
 		}
