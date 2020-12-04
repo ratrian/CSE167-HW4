@@ -11,10 +11,9 @@ private:
 	glm::vec3 dir, color;
 
 public:
-	DirLight(glm::vec3 pos, glm::vec3 color);
+	DirLight(glm::vec3 dir, glm::vec3 color);
 
 	void sendLightToShader(GLuint shader);
-	glm::vec3 getDir();
 };
 
 #endif

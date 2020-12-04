@@ -16,6 +16,7 @@ bool Window::rotateCarousel = false;
 bool Window::rotatePole = false;
 bool Window::rotateCar = false;
 
+DirLight* Window::dirLight;
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
 
@@ -85,6 +86,7 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 	
+	dirLight = new DirLight(glm::vec3(0.0, -3.0, -6.0), glm::vec3(0.7, 0.7, 0.7));
 	pointLight = new PointLight(glm::vec3(-3.0, -5.0, -6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
@@ -141,6 +143,7 @@ bool Window::initializeObjects()
 
 void Window::cleanUp()
 {
+	delete dirLight;
 	delete pointLight;
 	delete lightSource;
 
@@ -261,11 +264,7 @@ void Window::displayCallback(GLFWwindow* window)
 	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(shaderProgram);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	lightSource->draw(shaderProgram, glm::mat4(1.0));
-	glUseProgram(0);
+	dirLight->sendLightToShader(shaderProgram);
 
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));

@@ -8,10 +8,8 @@ DirLight::DirLight(glm::vec3 dir, glm::vec3 color)
 
 void DirLight::sendLightToShader(GLuint shader)
 {
+	glUseProgram(shader);
 	glUniform3fv(glGetUniformLocation(shader, "lightDir"), 1, glm::value_ptr(dir));
 	glUniform3fv(glGetUniformLocation(shader, "lightCol"), 1, glm::value_ptr(color));
-}
-
-glm::vec3 DirLight::getDir() {
-	return dir;
+	glUseProgram(0);
 }

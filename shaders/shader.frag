@@ -48,7 +48,7 @@ void main()
         else if (drawLightSource == 0.0)
         {
             vec3 viewDir = normalize(posOutput);
-            vec3 result = CalcPointLight(posOutput, norm, viewDir);
+            vec3 result = CalcDirLight(norm, viewDir);
             if (drawAstro == 1.0)
             {
                 float edge = max(0, dot(norm, viewDir));

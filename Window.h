@@ -3,6 +3,7 @@
 
 #include "main.h"
 #include "shader.h"
+#include "DirLight.h"
 #include "LightSource.h"
 #include "Transform.h"
 #include "Geometry.h"
@@ -21,6 +22,7 @@ public:
 	static bool activated, actionLobby, actionLightSource, carouselView, rotateCarousel, rotatePole, rotateCar;
 	static glm::vec3 lastPoint;
 
+	static DirLight* dirLight;
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
