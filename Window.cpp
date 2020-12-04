@@ -86,7 +86,7 @@ bool Window::initializeObjects()
 {
 	pointSize = 30.0;
 	
-	pointLight = new PointLight(glm::vec3(-17.0, 7.0, 0.0), glm::vec3(0.9, 0.9, 0.9), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-3.0, -5.0, -6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up lobby.
@@ -99,13 +99,13 @@ bool Window::initializeObjects()
 	// Set up astronauts.
 	for (unsigned i = 0; i < 10; i++) {
 		astroStillTransform[i] = new Transform();
-		astroStillTransform[i]->translate(glm::vec3(-13.0f + float(i * 3), 0.0f, 0.0f));
+		astroStillTransform[i]->translate(glm::vec3(-13.0f + float(i * 3), -3.0f, 0.0f));
 
 		astroMoving1Transform[i] = new Transform();
-		astroMoving1Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), 0.0f, 0.0f));
+		astroMoving1Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), -3.0f, 0.0f));
 
 		astroMoving2Transform[i] = new Transform();
-		astroMoving2Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), 0.0f, 0.0f));
+		astroMoving2Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), -3.0f, 0.0f));
 
 		currAstroTransform[i] = astroStillTransform[i];
 	}
