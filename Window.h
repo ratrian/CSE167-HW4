@@ -24,10 +24,13 @@ public:
 	static PointLight* pointLight;
 	static LightSource* lightSource;
 
-	static Geometry* lobby;
-
 	static Transform* world;
-	
+
+	static Geometry* lobby;
+	static Geometry* astroStill[10];
+	static Geometry* astroMoving1[10];
+	static Geometry* astroMoving2[10];
+
 	static Cube* skybox;
 	static Sphere* discoball;
 

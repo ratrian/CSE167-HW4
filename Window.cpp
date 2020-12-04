@@ -22,6 +22,11 @@ LightSource* Window::lightSource;
 Material* lobbyMaterial;
 Geometry* Window::lobby;
 
+Material* astroMaterial[10];
+Geometry* Window::astroStill[10];
+Geometry* Window::astroMoving1[10];
+Geometry* Window::astroMoving2[10];
+
 Transform* Window::world;
 
 Cube* Window::skybox;
@@ -86,6 +91,14 @@ bool Window::initializeObjects()
 	lobby = new Geometry("amongus_lobby.obj", 0.5f, pointSize, normalColoring, lobbyMaterial);
 	world->addChild(lobby);
 
+	// Set up astronauts.
+	for (unsigned i = 0; i < 10; i++) {
+		//astroMaterial[i] = new Material();
+		//astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+		//astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+		//astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, normalColoring, astroMaterial[i]);
+	}
+
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
 
@@ -97,10 +110,17 @@ void Window::cleanUp()
 	delete pointLight;
 	delete lightSource;
 
+	delete world;
+
 	delete lobbyMaterial;
 	delete lobby;
 
-	delete world;
+	for (unsigned i = 0; i < 10; i++) {
+		delete astroMaterial[i];
+		delete astroStill[i];
+		delete astroMoving1[i];
+		delete astroMoving2[i];
+	}
 
 	delete skybox;
 	delete discoball;
