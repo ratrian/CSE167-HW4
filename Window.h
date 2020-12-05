@@ -7,6 +7,7 @@
 #include "LightSource.h"
 #include "Transform.h"
 #include "Geometry.h"
+#include "BoundingPlane.h"
 #include "Cube.h"
 #include "Sphere.h"
 
@@ -35,6 +36,9 @@ public:
 	static Geometry* astroStill[10];
 	static Geometry* astroMoving1[10];
 	static Geometry* astroMoving2[10];
+
+	static BoundingSphere* boxBoundingSphere[2];
+	static BoundingPlane* wallBoundingPlane[6];
 
 	static Cube* skybox;
 	static Sphere* discoball;

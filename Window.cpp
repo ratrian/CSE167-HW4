@@ -35,6 +35,9 @@ Geometry* Window::astroMoving1[10];
 Geometry* Window::astroMoving2[10];
 Geometry* currAstro[10];
 
+BoundingSphere* Window::boxBoundingSphere[2];
+BoundingPlane* Window::wallBoundingPlane[6];
+
 Cube* Window::skybox;
 Sphere* Window::discoball;
 
@@ -163,6 +166,13 @@ void Window::cleanUp()
 		delete astroStill[i];
 		delete astroMoving1[i];
 		delete astroMoving2[i];
+	}
+
+	for (unsigned i = 0; i < 2; i++) {
+		delete boxBoundingSphere[i];
+	}
+	for (unsigned i = 0; i < 6; i++) {
+		delete wallBoundingPlane[i];
 	}
 
 	delete skybox;
