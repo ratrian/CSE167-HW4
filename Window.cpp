@@ -137,7 +137,17 @@ bool Window::initializeObjects()
 		currAstroTransform[i]->addChild(currAstro[i]);
 		lobbyTransform->addChild(currAstroTransform[i]);
 	}
+/*
+	BoundingSphere[0] = new BoundingSphere(glm::vec3(), );
+	BoundingSphere[1] = new BoundingSphere(glm::vec3(), );
 
+	BoundingPlane[0] = new BoundingPlane(glm::vec3(0.0, -1.0, 0.0), glm::vec3());
+	BoundingPlane[1] = new BoundingPlane(glm::vec3(-1.0, 0.0, 0.0), glm::vec3());
+	BoundingPlane[2] = new BoundingPlane(glm::vec3(-sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3());
+	BoundingPlane[3] = new BoundingPlane(glm::vec3(0.0, 1.0, 0.0), glm::vec3());
+	BoundingPlane[4] = new BoundingPlane(glm::vec3(sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3());
+	BoundingPlane[5] = new BoundingPlane(glm::vec3(1.0, 0.0, 0.0), glm::vec3());
+*/
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
 
