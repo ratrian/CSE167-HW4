@@ -137,7 +137,7 @@ bool Window::initializeObjects()
 	boxBoundingSphere[0] = new BoundingSphere(glm::vec3(-9.0f, -0.942977f, 6.91321f), 2.0f);
 	boxBoundingSphere[1] = new BoundingSphere(glm::vec3(11.0f, -0.942977f, 3.91321f), 2.0f);
 
-	wallBoundingPlane[0] = new BoundingPlane(glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0f, -0.942977f, -17.0868f));
+	wallBoundingPlane[0] = new BoundingPlane(glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0f, -0.942977f, -18.0868f));
 	wallBoundingPlane[1] = new BoundingPlane(glm::vec3(-1.0, 0.0, 0.0), glm::vec3(17.0f, -0.942977f, -3.0868f));
 	wallBoundingPlane[2] = new BoundingPlane(glm::vec3(-sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3(14.0f, -0.942977f, 15.9132f));
 	wallBoundingPlane[3] = new BoundingPlane(glm::vec3(0.0, 1.0, 0.0), glm::vec3(1.0f, -0.942977f, 17.9132f));
