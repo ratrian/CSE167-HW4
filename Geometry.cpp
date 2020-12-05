@@ -155,6 +155,14 @@ Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSi
 		points[i].z -= centZ;
 	}
 
+	GLfloat maxDist = sqrt((points[0].x) * (points[0].x) + (points[0].y) * (points[0].y) + (points[0].z) * (points[0].z));
+	for (int i = 0; i < numPoints; i++) {
+		if (maxDist < sqrt((points[i].x) * (points[i].x) + (points[i].y) * (points[i].y) + (points[i].z) * (points[i].z)))
+			maxDist = sqrt((points[i].x) * (points[i].x) + (points[i].y) * (points[i].y) + (points[i].z) * (points[i].z));
+	}
+
+	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), maxDist);
+
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -229,6 +237,8 @@ Geometry::~Geometry()
 	glDeleteBuffers(1, &NBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);
+
+	delete boundingSphere;
 }
 
 void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
@@ -267,4 +277,9 @@ void Geometry::updatePointSize(GLfloat size)
 	 * TODO: Section 3: Implement this function to adjust the point size.
 	 */
 	pointSize = size;
+}
+
+BoundingSphere* Geometry::getBoundingSphere()
+{
+	return boundingSphere;
 }

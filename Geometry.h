@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "Material.h"
+#include "BoundingSphere.h"
 
 #include <string>
 #include <vector>
@@ -26,6 +27,8 @@ private:
 	GLfloat pointSize, drawAstro;
 	Material* material;
 
+	BoundingSphere* boundingSphere;
+
 public:
 	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat drawAstro, Material* material);
 	~Geometry();
@@ -34,6 +37,7 @@ public:
 	void update();
 
 	void updatePointSize(GLfloat size);
+	BoundingSphere* getBoundingSphere();
 };
 
 #endif
