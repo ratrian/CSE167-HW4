@@ -106,6 +106,7 @@ bool Window::initializeObjects()
 		astroMoving2Transform[i]->translate(glm::vec3(-13.0f + float(i * 3), -3.0f, 0.0f));
 
 		currAstroTransform[i] = astroMoving1Transform[i];
+		lobbyTransform->addChild(currAstroTransform[i]);
 	}
 	astroMaterial[0] = new Material(glm::vec3(62.0f/255.0f, 71.0f/255.0f, 78.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	astroMaterial[1] = new Material(glm::vec3(19.0f/255.0f, 46.0f/255.0f, 209.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
@@ -131,7 +132,6 @@ bool Window::initializeObjects()
 		astroMoving2Transform[i]->addChild(astroMoving2[i]);
 
 		currAstro[i] = astroMoving1[i];
-		lobbyTransform->addChild(currAstroTransform[i]);
 	}
 /*
 	BoundingSphere[0] = new BoundingSphere(glm::vec3(), );
