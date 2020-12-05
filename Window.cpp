@@ -128,7 +128,6 @@ bool Window::initializeObjects()
 		astroMoving2Transform[i]->addChild(astroMoving2[i]);
 
 		currAstro[i] = astroMoving1[i];
-		currAstroTransform[i]->addChild(currAstro[i]);
 		lobbyTransform->addChild(currAstroTransform[i]);
 	}
 /*
@@ -342,7 +341,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
 			astroMoving2Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
-			currAstro[0] = astroMoving1[0];
 			break;
 		case GLFW_KEY_S:
 			/*for (unsigned i = 0; i < 2; i++) {
@@ -361,7 +359,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
 			astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
-			currAstro[0] = astroMoving1[0];
 			break;
 		case GLFW_KEY_D:
 			/*for (unsigned i = 0; i < 2; i++) {
@@ -380,7 +377,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
 			astroMoving2Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
-			currAstro[0] = astroMoving1[0];
 			break;
 
 		default:
