@@ -22,7 +22,7 @@ public:
 
 	glm::vec3 getCenter();
 	GLfloat getRadius();
-	bool collide(BoundingSphere bs);
+	bool collide(BoundingSphere boundingSphere);
 };
 
 #endif
