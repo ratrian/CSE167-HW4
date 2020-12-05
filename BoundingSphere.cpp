@@ -6,11 +6,6 @@ BoundingSphere::BoundingSphere(glm::vec3 center, GLfloat radius)
 	BoundingSphere::radius = radius;
 }
 
-void BoundingSphere::updateCenter(glm::vec3 center)
-{
-	BoundingSphere::center = center;
-}
-
 glm::vec3 BoundingSphere::getCenter()
 {
 	return center;

@@ -161,7 +161,7 @@ Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSi
 			maxDist = sqrt((points[i].x) * (points[i].x) + (points[i].y) * (points[i].y) + (points[i].z) * (points[i].z));
 	}
 
-	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), maxDist);
+	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), 9.5 / maxDist);
 
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
@@ -264,8 +264,6 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);
-
-	boundingSphere->updateCenter(glm::vec3(C * glm::vec4(boundingSphere->getCenter(), 1.0)));
 }
 
 void Geometry::update()
