@@ -10,12 +10,6 @@ bool Window::actionLobby = true;
 bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
 
-bool Window::carouselView = false;
-
-bool Window::rotateCarousel = false;
-bool Window::rotatePole = false;
-bool Window::rotateCar = false;
-
 DirLight* Window::dirLight;
 PointLight* Window::pointLight;
 LightSource* Window::lightSource;
@@ -270,13 +264,6 @@ void Window::idleCallback()
 {
 	// Perform any necessary updates here
 	discoball->update();
-	if (rotateCarousel) {
-		lobbyTransform->update();
-		carouselPos = glm::vec3(glm::rotate(glm::mat4(1.0f), 0.0002f, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselPos, 1));
-		carouselLookAtPoint = glm::vec3(glm::rotate(glm::mat4(1.0f), glm::degrees(0.0002f), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(carouselLookAtPoint, 1));
-		if (carouselView)
-			view = glm::lookAt(carouselPos, carouselLookAtPoint, upVector);
-	}
 }
 
 void Window::displayCallback(GLFWwindow* window)
@@ -319,27 +306,13 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			actionLobby = !actionLobby;
 			actionLightSource = !actionLightSource;
 			break;
-		case GLFW_KEY_V:
-			carouselView = !carouselView;
-			if (carouselView)
-			{
-				actionLobby = false;
-				view = glm::lookAt(carouselPos, carouselLookAtPoint, upVector);
-			}
-			else
-			{
-				actionLobby = true;
-				view = glm::lookAt(eyePos, lookAtPoint, upVector);
-			}
+		case GLFW_KEY_W:
 			break;
-		case GLFW_KEY_1:
-			rotateCarousel = !rotateCarousel;
+		case GLFW_KEY_A:
 			break;
-		case GLFW_KEY_2:
-			rotatePole = !rotatePole;
+		case GLFW_KEY_S:
 			break;
-		case GLFW_KEY_3:
-			rotateCar = !rotateCar;
+		case GLFW_KEY_D:
 			break;
 
 		default:

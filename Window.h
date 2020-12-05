@@ -20,7 +20,7 @@ public:
 	static int height;
 	static const char* windowTitle;
 
-	static bool activated, actionLobby, actionLightSource, carouselView, rotateCarousel, rotatePole, rotateCar;
+	static bool activated, actionLobby, actionLightSource;
 	static glm::vec3 lastPoint;
 
 	static DirLight* dirLight;
