@@ -331,13 +331,13 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
 				break;
 			}
-			/*for (unsigned i = 0; i < 6; i++) {
+			for (unsigned i = 0; i < 6; i++) {
 				if (wallBoundingPlane[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
 					collision = true;
 					break;
 				}
-			}*/
+			}
 			if (collision)
 			{
 				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
