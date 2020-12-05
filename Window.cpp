@@ -322,6 +322,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
 			astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
+			//currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z - 1.0), currAstro[0]->getBoundingSphere()->getRadius()));
 			break;
 		case GLFW_KEY_A:
 			/*for (unsigned i = 0; i < 2; i++) {
@@ -340,6 +341,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
 			astroMoving2Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
+			//currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x - 1.0, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
 			break;
 		case GLFW_KEY_S:
 			/*for (unsigned i = 0; i < 2; i++) {
@@ -358,6 +360,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
 			astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
+			//currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0), currAstro[0]->getBoundingSphere()->getRadius()));
 			break;
 		case GLFW_KEY_D:
 			/*for (unsigned i = 0; i < 2; i++) {
@@ -376,6 +379,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			astroMoving1Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
 			astroMoving2Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
 			currAstroTransform[0] = astroMoving1Transform[0];
+			//currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x + 1.0, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
 			break;
 
 		default:

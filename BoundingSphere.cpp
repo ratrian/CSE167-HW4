@@ -24,7 +24,7 @@ bool BoundingSphere::collide(BoundingSphere boundingSphere)
 	difference.z = boundingSphere.getCenter().z - center.z;
 	
 	GLfloat dist = sqrt(difference.x * difference.x + difference.y * difference.y + difference.z * difference.z);
-	std::cout << "dist: " << dist << ", " << "sum radii: " << boundingSphere.getRadius() + radius << std::endl;
+	//std::cout << "dist: " << dist << ", " << "sum radii: " << boundingSphere.getRadius() + radius << std::endl;
 	if (dist < boundingSphere.getRadius() + radius)
 		return true;
 	return false;
