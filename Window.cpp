@@ -136,14 +136,14 @@ bool Window::initializeObjects()
 
 	boxBoundingSphere[0] = new BoundingSphere(glm::vec3(-9.0f, -0.942977f, 6.91321f), 2.0f);
 	boxBoundingSphere[1] = new BoundingSphere(glm::vec3(11.0f, -0.942977f, 3.91321f), 2.0f);
-/*
-	wallBoundingPlane[0] = new BoundingPlane(glm::vec3(0.0, -1.0, 0.0), glm::vec3());
-	wallBoundingPlane[1] = new BoundingPlane(glm::vec3(-1.0, 0.0, 0.0), glm::vec3());
-	wallBoundingPlane[2] = new BoundingPlane(glm::vec3(-sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3());
-	wallBoundingPlane[3] = new BoundingPlane(glm::vec3(0.0, 1.0, 0.0), glm::vec3());
-	wallBoundingPlane[4] = new BoundingPlane(glm::vec3(sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3());
-	wallBoundingPlane[5] = new BoundingPlane(glm::vec3(1.0, 0.0, 0.0), glm::vec3());
-*/
+
+	wallBoundingPlane[0] = new BoundingPlane(glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0f, -0.942977f, -17.0868f));
+	wallBoundingPlane[1] = new BoundingPlane(glm::vec3(-1.0, 0.0, 0.0), glm::vec3(17.0f, -0.942977f, -3.0868f));
+	wallBoundingPlane[2] = new BoundingPlane(glm::vec3(-sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3(14.0f, -0.942977f, 15.9132f));
+	wallBoundingPlane[3] = new BoundingPlane(glm::vec3(0.0, 1.0, 0.0), glm::vec3(1.0f, -0.942977f, 17.9132f));
+	wallBoundingPlane[4] = new BoundingPlane(glm::vec3(sqrt(2.0)/2.0, sqrt(2.0)/2.0, 0.0), glm::vec3(-13.0f, -0.942977f, 15.9132f));
+	wallBoundingPlane[5] = new BoundingPlane(glm::vec3(1.0, 0.0, 0.0), glm::vec3(-16.0f, -0.942977f, -0.086795f));
+
 	skybox = new Cube(1000);
 	discoball = new Sphere(eyePos);
 
@@ -297,6 +297,7 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 	// Check for a key press.
 	if (action == GLFW_PRESS)
 	{
+		bool collision = false;
 		switch (key)
 		{
 		case GLFW_KEY_ESCAPE:
@@ -317,35 +318,50 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			/*for (unsigned i = 0; i < 6; i++) {
 				if (wallBoundingPlane[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
 			}*/
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
+			}
 			for (unsigned i = 1; i < 10; i++) {
 				if (currAstro[i]->getBoundingSphere()->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			break;
 		case GLFW_KEY_A:
@@ -357,35 +373,50 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					astroMoving1Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					astroMoving2Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x + 1.0f, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			/*for (unsigned i = 0; i < 6; i++) {
 				if (wallBoundingPlane[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					astroMoving1Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					astroMoving2Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x + 1.0f, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
 			}*/
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
+			}
 			for (unsigned i = 1; i < 10; i++) {
 				if (currAstro[i]->getBoundingSphere()->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					astroMoving1Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					astroMoving2Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x + 1.0f, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			break;
 		case GLFW_KEY_S:
@@ -397,35 +428,50 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z - 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			/*for (unsigned i = 0; i < 6; i++) {
 				if (wallBoundingPlane[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z - 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
 			}*/
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
+			}
 			for (unsigned i = 1; i < 10; i++) {
 				if (currAstro[i]->getBoundingSphere()->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z - 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			break;
 		case GLFW_KEY_D:
@@ -437,35 +483,50 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					astroMoving1Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					astroMoving2Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x - 1.0f, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			/*for (unsigned i = 0; i < 6; i++) {
 				if (wallBoundingPlane[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					astroMoving1Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					astroMoving2Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x - 1.0f, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
 			}*/
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
+			}
 			for (unsigned i = 1; i < 10; i++) {
 				if (currAstro[i]->getBoundingSphere()->collide(*currAstro[0]->getBoundingSphere()))
 				{
-					astroStillTransform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					astroMoving1Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					astroMoving2Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
-					currAstroTransform[0] = astroMoving1Transform[0];
-					currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x - 1.0f, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z), currAstro[0]->getBoundingSphere()->getRadius()));
+					collision = true;
 					break;
 				}
+			}
+			if (collision)
+			{
+				astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
+				currAstroTransform[0] = astroMoving1Transform[0];
+				currAstro[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(currAstro[0]->getBoundingSphere()->getCenter().x, currAstro[0]->getBoundingSphere()->getCenter().y, currAstro[0]->getBoundingSphere()->getCenter().z + 1.0f), currAstro[0]->getBoundingSphere()->getRadius()));
+				break;
 			}
 			break;
 
