@@ -6,6 +6,11 @@ BoundingSphere::BoundingSphere(glm::vec3 center, GLfloat radius)
 	BoundingSphere::radius = radius;
 }
 
+void BoundingSphere::updateCenter(glm::vec3 center)
+{
+	BoundingSphere::center = center;
+}
+
 glm::vec3 BoundingSphere::getCenter()
 {
 	return center;
@@ -24,6 +29,7 @@ bool BoundingSphere::collide(BoundingSphere boundingSphere)
 	difference.z = boundingSphere.getCenter().z - center.z;
 	
 	GLfloat dist = sqrt(difference.x * difference.x + difference.y * difference.y + difference.z * difference.z);
+	std::cout << "dist: " << dist << ", " << "sum radii: " << boundingSphere.getRadius() + radius << std::endl;
 	if (dist < boundingSphere.getRadius() + radius)
 		return true;
 	return false;

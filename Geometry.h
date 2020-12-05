@@ -37,6 +37,7 @@ public:
 	void update();
 
 	void updatePointSize(GLfloat size);
+	void updateBoundingSphere(BoundingSphere* boundingSphere);
 	BoundingSphere* getBoundingSphere();
 };
 

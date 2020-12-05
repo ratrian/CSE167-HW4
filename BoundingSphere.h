@@ -11,6 +11,8 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+//#include <iostream>
+
 class BoundingSphere
 {
 private:
@@ -20,6 +22,7 @@ private:
 public:
 	BoundingSphere(glm::vec3 center, GLfloat radius);
 
+	void updateCenter(glm::vec3 center);
 	glm::vec3 getCenter();
 	GLfloat getRadius();
 	bool collide(BoundingSphere boundingSphere);

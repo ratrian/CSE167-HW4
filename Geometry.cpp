@@ -264,6 +264,8 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 
 	// Unbind the VAO and shader program
 	glBindVertexArray(0);
+
+	boundingSphere->updateCenter(glm::vec3(C * glm::vec4(boundingSphere->getCenter(), 1.0)));
 }
 
 void Geometry::update()
@@ -277,6 +279,12 @@ void Geometry::updatePointSize(GLfloat size)
 	 * TODO: Section 3: Implement this function to adjust the point size.
 	 */
 	pointSize = size;
+}
+
+void Geometry::updateBoundingSphere(BoundingSphere* boundingSphere)
+{
+	delete Geometry::boundingSphere;
+	Geometry::boundingSphere = boundingSphere;
 }
 
 BoundingSphere* Geometry::getBoundingSphere()
