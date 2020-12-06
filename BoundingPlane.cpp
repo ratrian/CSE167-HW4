@@ -16,11 +16,12 @@ glm::vec3 BoundingPlane::getP()
 	return p;
 }
 
-bool BoundingPlane::collide(BoundingSphere bs)
+bool BoundingPlane::collide(BoundingSphere boundingSphere)
 {
-	GLfloat dist = glm::dot(bs.getCenter(), n) - glm::dot(p, n);
-	std::cout << "dist: " << dist << std::endl;
-	if (dist <= bs.getRadius())
+	GLfloat dist = glm::dot(boundingSphere.getCenter(), n) - glm::dot(p, n);
+	dist = sqrt(dist * dist);
+	std::cout << "dist: " << dist << ", Center: " << boundingSphere.getCenter().x << " " << boundingSphere.getCenter().y << " " << boundingSphere.getCenter().z << ", P: " << p.x << " " << p.y << " " << p.z << std::endl;
+	if (dist <= boundingSphere.getRadius())
 		return true;
 	return false;
 }

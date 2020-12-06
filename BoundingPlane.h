@@ -25,7 +25,7 @@ public:
 		
 	glm::vec3 getN();
 	glm::vec3 getP();
-	bool collide(BoundingSphere bs);
+	bool collide(BoundingSphere boundingSphere);
 };
 
 #endif
