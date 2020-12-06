@@ -160,7 +160,7 @@ bool Window::initializeObjects()
 	wallBoundingPlane[0] = new BoundingPlane(glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -0.942977f, -18.0868f));
 	wallBoundingPlane[1] = new BoundingPlane(glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(16.0f, -0.942977f, -0.086795f));
 	wallBoundingPlane[2] = new BoundingPlane(glm::vec3(-sqrt(2.0f)/2.0f, sqrt(2.0f)/2.0f, 0.0f), glm::vec3(14.0f, -0.942977f, 15.9132f));
-	wallBoundingPlane[3] = new BoundingPlane(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -0.942977f, 17.9132f));
+	wallBoundingPlane[3] = new BoundingPlane(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -0.942977f, 18.0868f));
 	wallBoundingPlane[4] = new BoundingPlane(glm::vec3(sqrt(2.0f)/2.0f, sqrt(2.0f)/2.0f, 0.0f), glm::vec3(-14.0f, -0.942977f, 15.9132f));
 	wallBoundingPlane[5] = new BoundingPlane(glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(-16.0f, -0.942977f, -0.086795f));
 
