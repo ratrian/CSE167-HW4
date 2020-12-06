@@ -116,6 +116,7 @@ bool Window::initializeObjects()
 		currAstroTransform[i] = astroMoving1Transform[i];
 		lobbyTransform->addChild(currAstroTransform[i]);
 	}
+
 	astroMaterial[0] = new Material(glm::vec3(62.0f/255.0f, 71.0f/255.0f, 78.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	astroMaterial[1] = new Material(glm::vec3(19.0f/255.0f, 46.0f/255.0f, 209.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	astroMaterial[2] = new Material(glm::vec3(113.0f/255.0f, 73.0f/255.0f, 29.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);

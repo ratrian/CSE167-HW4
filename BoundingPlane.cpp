@@ -20,7 +20,6 @@ bool BoundingPlane::collide(BoundingSphere boundingSphere)
 {
 	GLfloat dist = glm::dot(boundingSphere.getCenter(), n) - glm::dot(p, n);
 	dist = sqrt(dist * dist);
-	std::cout << "dist: " << dist << ", Center: " << boundingSphere.getCenter().x << " " << boundingSphere.getCenter().y << " " << boundingSphere.getCenter().z << ", P: " << p.x << " " << p.y << " " << p.z << std::endl;
 	if (dist <= boundingSphere.getRadius())
 		return true;
 	return false;
