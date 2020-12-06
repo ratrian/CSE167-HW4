@@ -283,7 +283,6 @@ void Geometry::updateBoundingSphere(BoundingSphere* boundingSphere)
 {
 	delete Geometry::boundingSphere;
 	Geometry::boundingSphere = boundingSphere;
-	std::cout << "center: " << boundingSphere->getCenter().x << " " << boundingSphere->getCenter().y << " " << boundingSphere->getCenter().z << ", " << "radius" << boundingSphere->getRadius() << std::endl;
 }
 
 BoundingSphere* Geometry::getBoundingSphere()
