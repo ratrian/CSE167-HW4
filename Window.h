@@ -1,6 +1,8 @@
 #ifndef _WINDOW_H_
 #define _WINDOW_H_
 
+#include <string>
+
 #include "main.h"
 #include "shader.h"
 #include "DirLight.h"

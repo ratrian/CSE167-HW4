@@ -28,6 +28,7 @@ Geometry* Window::astroStill[10];
 Geometry* Window::astroMoving1[10];
 Geometry* Window::astroMoving2[10];
 Geometry* currAstro[10];
+string currAstroFacingDir[10];
 
 BoundingSphere* Window::boxBoundingSphere[2];
 BoundingPlane* Window::wallBoundingPlane[6];
@@ -105,13 +106,13 @@ bool Window::initializeObjects()
 	lobbyTransform->addChild(currAstroTransform[0]);
 	for (unsigned i = 1; i < 10; i++) {
 		astroStillTransform[i] = new Transform();
-		astroStillTransform[i]->translate(glm::vec3(-16.5f + float(i * 4), -3.0f, 0.0f));
+		astroStillTransform[i]->translate(glm::vec3(-16.5f + float(i * 3.5), -3.0f, 0.0f));
 
 		astroMoving1Transform[i] = new Transform();
-		astroMoving1Transform[i]->translate(glm::vec3(-16.5f + float(i * 4), -3.0f, 0.0f));
+		astroMoving1Transform[i]->translate(glm::vec3(-16.5f + float(i * 3.5), -3.0f, 0.0f));
 
 		astroMoving2Transform[i] = new Transform();
-		astroMoving2Transform[i]->translate(glm::vec3(-16.5f + float(i * 4), -3.0f, 0.0f));
+		astroMoving2Transform[i]->translate(glm::vec3(-16.5f + float(i * 3.5), -3.0f, 0.0f));
 
 		currAstroTransform[i] = astroMoving1Transform[i];
 		lobbyTransform->addChild(currAstroTransform[i]);
@@ -138,20 +139,22 @@ bool Window::initializeObjects()
 	astroMoving2[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[0]->getBoundingSphere()->getCenter().x, astroMoving2[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[0]->getBoundingSphere()->getCenter().z + 4.0f), astroMoving2[0]->getBoundingSphere()->getRadius()));
 	astroMoving2Transform[0]->addChild(astroMoving2[0]);
 	currAstro[0] = astroMoving1[0];
+	currAstroFacingDir[0] = "south";
 	for (unsigned i = 1; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
-		astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 4), astroStill[i]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
+		astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroStill[i]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
 		astroStillTransform[i]->addChild(astroStill[i]);
 
 		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
-		astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 4), astroMoving1[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving1[i]->getBoundingSphere()->getCenter().z), astroMoving1[i]->getBoundingSphere()->getRadius()));
+		astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroMoving1[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving1[i]->getBoundingSphere()->getCenter().z), astroMoving1[i]->getBoundingSphere()->getRadius()));
 		astroMoving1Transform[i]->addChild(astroMoving1[i]);
 
 		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
-		astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 4), astroMoving2[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[i]->getBoundingSphere()->getCenter().z), astroMoving2[i]->getBoundingSphere()->getRadius()));
+		astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroMoving2[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[i]->getBoundingSphere()->getCenter().z), astroMoving2[i]->getBoundingSphere()->getRadius()));
 		astroMoving2Transform[i]->addChild(astroMoving2[i]);
 
 		currAstro[i] = astroMoving1[i];
+		currAstroFacingDir[i] = "south";
 	}
 
 	boxBoundingSphere[0] = new BoundingSphere(glm::vec3(-9.0f, -0.942977f, 6.91321f), 2.0f);
@@ -330,6 +333,27 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			actionLightSource = !actionLightSource;
 			break;
 		case GLFW_KEY_W:
+			/*if (currAstroFacingDir[0].compare("south") == 0)
+			{
+				currAstroFacingDir[0] = "north";
+				astroStillTransform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("east") == 0)
+			{
+				currAstroFacingDir[0] = "north";
+				astroStillTransform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("west") == 0)
+			{
+				currAstroFacingDir[0] = "north";
+				astroStillTransform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}*/
 			astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
 			astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
 			astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, -1.0));
@@ -388,6 +412,27 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			}
 			break;
 		case GLFW_KEY_A:
+			/*if (currAstroFacingDir[0].compare("south") == 0)
+			{
+				currAstroFacingDir[0] = "west";
+				astroStillTransform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("north") == 0)
+			{
+				currAstroFacingDir[0] = "west";
+				astroStillTransform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("east") == 0)
+			{
+				currAstroFacingDir[0] = "west";
+				astroStillTransform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}*/
 			astroStillTransform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
 			astroMoving1Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
 			astroMoving2Transform[0]->translate(glm::vec3(-1.0, 0.0, 0.0));
@@ -446,6 +491,27 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			}
 			break;
 		case GLFW_KEY_S:
+			/*if (currAstroFacingDir[0].compare("north") == 0)
+			{
+				currAstroFacingDir[0] = "south";
+				astroStillTransform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("east") == 0)
+			{
+				currAstroFacingDir[0] = "south";
+				astroStillTransform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("west") == 0)
+			{
+				currAstroFacingDir[0] = "south";
+				astroStillTransform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}*/
 			astroStillTransform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
 			astroMoving1Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
 			astroMoving2Transform[0]->translate(glm::vec3(0.0, 0.0, 1.0));
@@ -504,6 +570,27 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 			}
 			break;
 		case GLFW_KEY_D:
+			/*if (currAstroFacingDir[0].compare("south") == 0)
+			{
+				currAstroFacingDir[0] = "east";
+				astroStillTransform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("north") == 0)
+			{
+				currAstroFacingDir[0] = "east";
+				astroStillTransform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(3.0f * glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else if (currAstroFacingDir[0].compare("west") == 0)
+			{
+				currAstroFacingDir[0] = "east";
+				astroStillTransform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving1Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+				astroMoving2Transform[0]->rotate(glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+			}*/
 			astroStillTransform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
 			astroMoving1Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
 			astroMoving2Transform[0]->translate(glm::vec3(1.0, 0.0, 0.0));
