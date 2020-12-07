@@ -765,6 +765,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				currAstro[0] = astroMoving1[0];
 			else if (currAstro[0] == astroMoving1[0])
 				currAstro[0] = astroMoving2[0];
+			astroTransform[0]->removeChild(0);
+			astroTransform[0]->addChild(currAstro[0]);
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
@@ -825,8 +827,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				astroTransform[0]->addChild(currAstro[0]);
 				break;
 			}
-			astroTransform[0]->removeChild(0);
-			astroTransform[0]->addChild(currAstro[0]);
 			break;
 		case GLFW_KEY_A:
 			if (currAstroFacingDir[0].compare("south") == 0)
@@ -852,6 +852,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				currAstro[0] = astroMoving1[0];
 			else if (currAstro[0] == astroMoving1[0])
 				currAstro[0] = astroMoving2[0];
+			astroTransform[0]->removeChild(0);
+			astroTransform[0]->addChild(currAstro[0]);
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
@@ -912,8 +914,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				astroTransform[0]->addChild(currAstro[0]);
 				break;
 			}
-			astroTransform[0]->removeChild(0);
-			astroTransform[0]->addChild(currAstro[0]);
 			break;
 		case GLFW_KEY_S:
 			if (currAstroFacingDir[0].compare("north") == 0)
@@ -939,6 +939,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				currAstro[0] = astroMoving1[0];
 			else if (currAstro[0] == astroMoving1[0])
 				currAstro[0] = astroMoving2[0];
+			astroTransform[0]->removeChild(0);
+			astroTransform[0]->addChild(currAstro[0]);
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
@@ -999,8 +1001,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				astroTransform[0]->addChild(currAstro[0]);
 				break;
 			}
-			astroTransform[0]->removeChild(0);
-			astroTransform[0]->addChild(currAstro[0]);
 			break;
 		case GLFW_KEY_D:
 			if (currAstroFacingDir[0].compare("south") == 0)
@@ -1026,6 +1026,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				currAstro[0] = astroMoving1[0];
 			else if (currAstro[0] == astroMoving1[0])
 				currAstro[0] = astroMoving2[0];
+			astroTransform[0]->removeChild(0);
+			astroTransform[0]->addChild(currAstro[0]);
 			for (unsigned i = 0; i < 2; i++) {
 				if (boxBoundingSphere[i]->collide(*currAstro[0]->getBoundingSphere()))
 				{
@@ -1086,8 +1088,6 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 				astroTransform[0]->addChild(currAstro[0]);
 				break;
 			}
-			astroTransform[0]->removeChild(0);
-			astroTransform[0]->addChild(currAstro[0]);
 			break;
 
 		default:
