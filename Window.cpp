@@ -317,13 +317,9 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 
 	 // Check for a key press.
 	if (action == GLFW_PRESS)
-	{
 		keyPressed = true;
-	}
 	else if (action == GLFW_RELEASE)
-	{
 		keyPressed = false;
-	}
 
 	if (keyPressed)
 	{
