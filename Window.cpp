@@ -383,7 +383,7 @@ void Window::idleCallback()
 				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 			}
-			else if (nonplayerWalkingDirOption[i-1] == 1)
+			if (nonplayerWalkingDirOption[i-1] == 1)
 			{
 				bool collision = false;
 				if (currAstroFacingDir[i].compare("south") == 0)
@@ -475,7 +475,7 @@ void Window::idleCallback()
 				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 			}
-			else if (nonplayerWalkingDirOption[i-1] == 2)
+			if (nonplayerWalkingDirOption[i-1] == 2)
 			{
 				bool collision = false;
 				if (currAstroFacingDir[i].compare("north") == 0)
@@ -567,7 +567,7 @@ void Window::idleCallback()
 				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 			}
-			else if (nonplayerWalkingDirOption[i-1] == 3)
+			if (nonplayerWalkingDirOption[i-1] == 3)
 			{
 				bool collision = false;
 				if (currAstroFacingDir[i].compare("south") == 0)
@@ -670,15 +670,15 @@ void Window::idleCallback()
 			{
 				;
 			}
-			else if (nonplayerWalkingDirOption[i-1] == 1)
+			if (nonplayerWalkingDirOption[i-1] == 1)
 			{
 				;
 			}
-			else if (nonplayerWalkingDirOption[i-1] == 2)
+			if (nonplayerWalkingDirOption[i-1] == 2)
 			{
 				;
 			}
-			else if (nonplayerWalkingDirOption[i-1] == 3)
+			if (nonplayerWalkingDirOption[i-1] == 3)
 			{
 				;
 			}
