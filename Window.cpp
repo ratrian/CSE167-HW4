@@ -280,6 +280,42 @@ void Window::idleCallback()
 {
 	// Perform any necessary updates here
 	discoball->update();
+	for (unsigned i = 1; i < 10; i++) {
+		if (glfwGetTime() == nonplayerAppearanceTime[i-1])
+		{
+
+		}
+		else if (glfwGetTime() == timeUntilNonplayerStartsWalking[i-1])
+		{
+			if (nonplayerWalkingDirOption[i-1] == 0)
+				;
+			else if (nonplayerWalkingDirOption[i-1] == 1)
+				;
+			else if (nonplayerWalkingDirOption[i-1] == 2)
+				;
+			else if (nonplayerWalkingDirOption[i-1] == 3)
+				;
+		}
+		else if (glfwGetTime() == timeUntilNonplayerStopsWalking[i-1])
+		{
+
+		}
+		else if (glfwGetTime() == timeUntilNonplayerRestartsWalking[i-1])
+		{
+			if (nonplayerWalkingDirOption[i-1] == 0)
+				;
+			else if (nonplayerWalkingDirOption[i-1] == 1)
+				;
+			else if (nonplayerWalkingDirOption[i-1] == 2)
+				;
+			else if (nonplayerWalkingDirOption[i-1] == 3)
+				;
+		}
+		else if (glfwGetTime() == timeUntilNonplayerDisappears[i-1])
+		{
+
+		}
+	}
 }
 
 void Window::displayCallback(GLFWwindow* window)
