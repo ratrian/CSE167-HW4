@@ -3,13 +3,13 @@
 
 #include "Node.h"
 
-#include <vector>
+#include <list>
 
 class Transform : public Node
 {
 private:
 	glm::mat4 M, mT, mR;
-	std::vector<Node*> children;
+	std::list<Node*> children;
 
 public:
 	Transform();
