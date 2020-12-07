@@ -143,11 +143,11 @@ bool Window::initializeObjects()
 		currAstroFacingDir[i] = "south";
 
 		nonplayerWalkingDirOption[i-1] = rand() % 4;
-		nonplayerAppearanceTime[i-1] = rand() % 60;
-		timeUntilNonplayerStartsWalking[i-1] = nonplayerAppearanceTime[i-1] + rand() % 20;
-		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 20;
-		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + rand() % 20;
-		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 60;
+		nonplayerAppearanceTime[i-1] = rand() % 30;
+		timeUntilNonplayerStartsWalking[i-1] = nonplayerAppearanceTime[i-1] + rand() % 15;
+		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 15;
+		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + rand() % 15;
+		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 30;
 	}
 
 	boxBoundingSphere[0] = new BoundingSphere(glm::vec3(-9.0f, -0.942977f, 6.91321f), 2.0f);
@@ -281,11 +281,11 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	for (unsigned i = 1; i < 10; i++) {
-		if (glfwGetTime() == nonplayerAppearanceTime[i-1])
+		if (glfwGetTime() >= nonplayerAppearanceTime[i-1] && glfwGetTime() < timeUntilNonplayerStartsWalking[i-1])
 		{
-
+			//lobbyTransform->addChild(astroTransform[i]);
 		}
-		else if (glfwGetTime() == timeUntilNonplayerStartsWalking[i-1])
+		else if (glfwGetTime() >= timeUntilNonplayerStartsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
 		{
 			if (nonplayerWalkingDirOption[i-1] == 0)
 				;
@@ -296,11 +296,11 @@ void Window::idleCallback()
 			else if (nonplayerWalkingDirOption[i-1] == 3)
 				;
 		}
-		else if (glfwGetTime() == timeUntilNonplayerStopsWalking[i-1])
+		else if (glfwGetTime() >= timeUntilNonplayerStopsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
 		{
 
 		}
-		else if (glfwGetTime() == timeUntilNonplayerRestartsWalking[i-1])
+		else if (glfwGetTime() >= timeUntilNonplayerRestartsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
 		{
 			if (nonplayerWalkingDirOption[i-1] == 0)
 				;
@@ -311,9 +311,9 @@ void Window::idleCallback()
 			else if (nonplayerWalkingDirOption[i-1] == 3)
 				;
 		}
-		else if (glfwGetTime() == timeUntilNonplayerDisappears[i-1])
+		else if (glfwGetTime() >= timeUntilNonplayerDisappears[i-1])
 		{
-
+			//lobbyTransform->removeChild(i+1);
 		}
 	}
 }
