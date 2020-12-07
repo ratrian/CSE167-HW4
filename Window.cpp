@@ -47,9 +47,6 @@ glm::vec3 Window::lookAtPoint(0, 0, 0);		// The point we are looking at.
 glm::vec3 Window::upVector(0, 1, 0);		// The up direction of the camera.
 glm::mat4 Window::view = glm::lookAt(Window::eyePos, Window::lookAtPoint, Window::upVector);
 
-glm::vec3 Window::carouselPos(0, -6.6, 0);
-glm::vec3 Window::carouselLookAtPoint(0, 0, 20);
-
 // Shader Program ID
 GLuint Window::shaderProgram;
 
