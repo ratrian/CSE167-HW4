@@ -300,6 +300,8 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 	{
 		keyPressed = false;
 		currAstro[0] = astroStill[0];
+		astroTransform[0]->removeChild(0);
+		astroTransform[0]->addChild(currAstro[0]);
 	}
 
 	if (keyPressed)
