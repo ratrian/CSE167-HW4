@@ -129,14 +129,12 @@ bool Window::initializeObjects()
 	
 	astroStill[0] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[0]);
 	astroStill[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[0]->getBoundingSphere()->getCenter().x, astroStill[0]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[0]->getBoundingSphere()->getCenter().z + 4.0f), astroStill[0]->getBoundingSphere()->getRadius()));
-	astroStillTransform[0]->addChild(astroStill[0]);
 	astroMoving1[0] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, 1.0f, astroMaterial[0]);
 	astroMoving1[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[0]->getBoundingSphere()->getCenter().x, astroMoving1[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving1[0]->getBoundingSphere()->getCenter().z + 4.0f), astroMoving1[0]->getBoundingSphere()->getRadius()));
-	astroMoving1Transform[0]->addChild(astroMoving1[0]);
 	astroMoving2[0] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, 1.0f, astroMaterial[0]);
 	astroMoving2[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[0]->getBoundingSphere()->getCenter().x, astroMoving2[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[0]->getBoundingSphere()->getCenter().z + 4.0f), astroMoving2[0]->getBoundingSphere()->getRadius()));
-	astroMoving2Transform[0]->addChild(astroMoving2[0]);
 	currAstro[0] = astroStill[0];
+	currAstroTransform[0]->addChild(currAstro[0]);
 	currAstroFacingDir[0] = "south";
 	for (unsigned i = 1; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
@@ -152,6 +150,7 @@ bool Window::initializeObjects()
 		astroMoving2Transform[i]->addChild(astroMoving2[i]);
 
 		currAstro[i] = astroStill[i];
+		currAstroTransform[i]->addChild(currAstro[i]);
 		currAstroFacingDir[i] = "south";
 	}
 
