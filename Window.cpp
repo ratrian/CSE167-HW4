@@ -28,6 +28,13 @@ Geometry* Window::astroMoving2[10];
 Geometry* currAstro[10];
 string currAstroFacingDir[10];
 
+float Window::nonplayerWalkingDirOption[9];
+float Window::nonplayerAppearanceTime[9];
+float Window::timeUntilNonplayerStartsWalking[9];
+float Window::timeUntilNonplayerStopsWalking[9];
+float Window::timeUntilNonplayerRestartsWalking[9];
+float Window::timeUntilNonplayerDisappears[9];
+
 BoundingSphere* Window::boxBoundingSphere[2];
 BoundingPlane* Window::wallBoundingPlane[6];
 
@@ -120,6 +127,7 @@ bool Window::initializeObjects()
 	currAstro[0] = astroStill[0];
 	astroTransform[0]->addChild(currAstro[0]);
 	currAstroFacingDir[0] = "south";
+	srand(time(NULL));
 	for (unsigned i = 1; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
 		astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroStill[i]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
@@ -133,6 +141,13 @@ bool Window::initializeObjects()
 		currAstro[i] = astroStill[i];
 		astroTransform[i]->addChild(currAstro[i]);
 		currAstroFacingDir[i] = "south";
+
+		nonplayerWalkingDirOption[i-1] = rand() % 4;
+		nonplayerAppearanceTime[i-1] = rand() % 60;
+		timeUntilNonplayerStartsWalking[i-1] = nonplayerAppearanceTime[i-1] + rand() % 20;
+		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 20;
+		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + rand() % 20;
+		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 60;
 	}
 
 	boxBoundingSphere[0] = new BoundingSphere(glm::vec3(-9.0f, -0.942977f, 6.91321f), 2.0f);
