@@ -22,7 +22,7 @@ public:
 	static int height;
 	static const char* windowTitle;
 
-	static bool activated, actionLobby, actionLightSource;
+	static bool mouseButtonPressed, keyPressed, actionLobby, actionLightSource;
 	static glm::vec3 lastPoint;
 
 	static DirLight* dirLight;

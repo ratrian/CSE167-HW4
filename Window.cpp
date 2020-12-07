@@ -5,7 +5,8 @@ int Window::width;
 int Window::height;
 const char* Window::windowTitle = "GLFW Starter Project";
 
-bool Window::activated = false;
+bool Window::mouseButtonPressed = false;
+bool Window::keyPressed = false;
 bool Window::actionLobby = true;
 bool Window::actionLightSource = false;
 glm::vec3 Window::lastPoint;
@@ -313,9 +314,18 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 	/*
 	 * TODO: Modify below to add your key callbacks.
 	 */
-	
-	// Check for a key press.
+
+	 // Check for a key press.
 	if (action == GLFW_PRESS)
+	{
+		keyPressed = true;
+	}
+	else if (action == GLFW_RELEASE)
+	{
+		keyPressed = false;
+	}
+
+	if (keyPressed)
 	{
 		bool collision = false;
 		switch (key)
@@ -656,7 +666,7 @@ void Window::mouseButtonCallback(GLFWwindow* window, int button, int action, int
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		activated = true;
+		mouseButtonPressed = true;
 
 		double xPos, yPos;
 		glfwGetCursorPos(window, &xPos, &yPos);
@@ -665,12 +675,12 @@ void Window::mouseButtonCallback(GLFWwindow* window, int button, int action, int
 		glMatrixMode(GL_MODELVIEW);
 	}
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-		activated = false;
+		mouseButtonPressed = false;
 }
 
 void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos)
 {
-	if (activated)
+	if (mouseButtonPressed)
 	{
 		glm::vec3 currPoint = trackBallMapping(xPos, yPos);
 		glm::vec3 direction = currPoint - lastPoint;
