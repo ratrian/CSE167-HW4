@@ -283,7 +283,7 @@ void Window::idleCallback()
 	for (unsigned i = 1; i < 10; i++) {
 		if (glfwGetTime() >= nonplayerAppearanceTime[i-1] && glfwGetTime() < timeUntilNonplayerStartsWalking[i-1])
 		{
-			//lobbyTransform->addChild(astroTransform[i]);
+			//astroTransform[i]->addChild(currAstro[i]);
 		}
 		else if (glfwGetTime() >= timeUntilNonplayerStartsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
 		{
@@ -313,7 +313,7 @@ void Window::idleCallback()
 		}
 		else if (glfwGetTime() >= timeUntilNonplayerDisappears[i-1])
 		{
-			//lobbyTransform->removeChild(i+1);
+			//astroTransform[i]->removeChild(0);
 		}
 	}
 }
