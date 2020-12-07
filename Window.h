@@ -30,9 +30,7 @@ public:
 	static LightSource* lightSource;
 
 	static Transform* lobbyTransform;
-	static Transform* astroStillTransform[10];
-	static Transform* astroMoving1Transform[10];
-	static Transform* astroMoving2Transform[10];
+	static Transform* astroTransform[10];
 
 	static Geometry* lobby;
 	static Geometry* astroStill[10];
