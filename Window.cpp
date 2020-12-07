@@ -35,6 +35,7 @@ float Window::timeUntilNonplayerStartsWalking[9];
 float Window::timeUntilNonplayerStopsWalking[9];
 float Window::timeUntilNonplayerRestartsWalking[9];
 float Window::timeUntilNonplayerDisappears[9];
+float startingTime;
 
 BoundingSphere* Window::boxBoundingSphere[2];
 BoundingPlane* Window::wallBoundingPlane[6];
@@ -142,7 +143,7 @@ bool Window::initializeObjects()
 		//currAstro[i] = astroStill[i];
 		//astroTransform[i]->addChild(currAstro[i]);
 		currAstroFacingDir[i] = "south";
-
+		
 		srand(i-1);
 		nonplayerWalkingDirOption[i-1] = rand() % 4;
 		nonplayerAppearanceTime[i-1] = rand() % 15;
@@ -151,6 +152,7 @@ bool Window::initializeObjects()
 		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + rand() % 10;
 		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 30;
 	}
+	startingTime = glfwGetTime();
 
 	boxBoundingSphere[0] = new BoundingSphere(glm::vec3(-9.0f, -0.942977f, 6.91321f), 2.0f);
 	boxBoundingSphere[1] = new BoundingSphere(glm::vec3(11.0f, -0.942977f, 3.91321f), 2.0f);
@@ -283,13 +285,13 @@ void Window::idleCallback()
 	// Perform any necessary updates here
 	discoball->update();
 	for (unsigned i = 1; i < 10; i++) {
-		if (glfwGetTime() >= nonplayerAppearanceTime[i-1] && glfwGetTime() < timeUntilNonplayerStartsWalking[i-1])
+		if (glfwGetTime() - startingTime >= nonplayerAppearanceTime[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerStartsWalking[i-1])
 		{
 			currAstroAppeared[i] = true;
 			currAstro[i] = astroStill[i];
 			astroTransform[i]->addChild(currAstro[i]);
 		}
-		else if (glfwGetTime() >= timeUntilNonplayerStartsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
+		else if (glfwGetTime() - startingTime >= timeUntilNonplayerStartsWalking[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
 			/*if (nonplayerWalkingDirOption[i-1] == 0)
 			{
@@ -660,11 +662,11 @@ void Window::idleCallback()
 				}
 			}*/
 		}
-		else if (glfwGetTime() >= timeUntilNonplayerStopsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
+		else if (glfwGetTime() - startingTime >= timeUntilNonplayerStopsWalking[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
 
 		}
-		else if (glfwGetTime() >= timeUntilNonplayerRestartsWalking[i-1] && glfwGetTime() < timeUntilNonplayerDisappears[i-1])
+		else if (glfwGetTime() - startingTime >= timeUntilNonplayerRestartsWalking[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
 			if (nonplayerWalkingDirOption[i-1] == 0)
 			{
@@ -683,7 +685,7 @@ void Window::idleCallback()
 				;
 			}
 		}
-		else if (glfwGetTime() >= timeUntilNonplayerDisappears[i-1])
+		else if (glfwGetTime() - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{
 			//astroTransform[i]->removeChild(0);
 		}
