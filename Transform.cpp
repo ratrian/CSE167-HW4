@@ -12,9 +12,14 @@ void Transform::addChild(Node* child)
 	children.push_back(child);
 }
 
+void Transform::removeChild(unsigned idx)
+{
+	children.erase(children.begin() + idx);
+}
+
 void Transform::draw(GLuint shaderProgram, glm::mat4 C)
 {
-	std::list<Node*>::iterator it;
+	std::vector<Node*>::iterator it;
 	for (it = children.begin(); it != children.end(); it++) {
 		(*it)->draw(shaderProgram, M * C * mT * mR);
 	}

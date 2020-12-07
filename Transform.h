@@ -3,18 +3,19 @@
 
 #include "Node.h"
 
-#include <list>
+#include <vector>
 
 class Transform : public Node
 {
 private:
 	glm::mat4 M, mT, mR;
-	std::list<Node*> children;
+	std::vector<Node*> children;
 
 public:
 	Transform();
 
 	void addChild(Node* child);
+	void removeChild(unsigned idx);
 	void draw(GLuint shaderProgram, glm::mat4 C);
 	void update();
 	void translate(glm::vec3 t);
