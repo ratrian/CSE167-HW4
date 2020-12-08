@@ -306,6 +306,19 @@ void Window::idleCallback()
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerStartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
+			if (currTime - startingTime >= timeUntilNonplayerStopsWalking[i-1])
+			{
+				nonplayerStartsWalking[i-1] = false;
+				timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerRestartsWalking[i-1] + (rand() % 10 + 1);
+				currAstro[i] = astroStill[i];
+				astroTransform[i]->removeChild(0);
+				astroTransform[i]->addChild(currAstro[i]);
+			}
+			else if (currTime - startingTime >= timeUntilNonplayerRestartsWalking[i-1])
+			{
+				nonplayerStartsWalking[i-1] = true;
+				timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
+			}
 			if (nonplayerStartsWalking[i - 1])
 			{
 				if (nonplayerWalkingDirOption[i - 1] == 0)
@@ -677,19 +690,6 @@ void Window::idleCallback()
 					}
 				}
 			}
-		}
-		else if (currTime - startingTime >= timeUntilNonplayerStopsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
-		{
-			nonplayerStartsWalking[i-1] = false;
-			timeUntilNonplayerStopsWalking[i-1] += rand() % 10 + 1;
-			currAstro[i] = astroStill[i];
-			astroTransform[i]->removeChild(0);
-			astroTransform[i]->addChild(currAstro[i]);
-		}
-		else if (currTime - startingTime >= timeUntilNonplayerRestartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
-		{
-			nonplayerStartsWalking[i-1] = true;
-			timeUntilNonplayerRestartsWalking[i - 1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{	
