@@ -149,10 +149,10 @@ bool Window::initializeObjects()
 		srand(i-1);
 		nonplayerWalkingDirOption[i-1] = rand() % 4;
 		nonplayerAppearanceTime[i-1] = rand() % 15;
-		timeUntilNonplayerStartsWalking[i-1] = nonplayerAppearanceTime[i-1] + rand() % 5;
-		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 10;
-		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + rand() % 10;
-		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 30;
+		timeUntilNonplayerStartsWalking[i-1] = nonplayerAppearanceTime[i-1] + (rand() % 5 + 1);
+		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 10 + 1);
+		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
+		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 30 + 1);
 		nonplayerIdx[i-1] = -1;
 	}
 	startingTime = glfwGetTime();
@@ -329,7 +329,7 @@ void Window::idleCallback()
 					currAstro[i] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				/*astroTransform[i]->removeChild(0);
+				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -393,7 +393,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}*/
+				}
 			}
 			if (nonplayerWalkingDirOption[i-1] == 1)
 			{
@@ -421,7 +421,7 @@ void Window::idleCallback()
 					currAstro[i] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				/*astroTransform[i]->removeChild(0);
+				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -485,7 +485,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}*/
+				}
 			}
 			if (nonplayerWalkingDirOption[i-1] == 2)
 			{
@@ -513,7 +513,7 @@ void Window::idleCallback()
 					currAstro[i] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				/*astroTransform[i]->removeChild(0);
+				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -577,7 +577,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}*/
+				}
 			}
 			if (nonplayerWalkingDirOption[i-1] == 3)
 			{
@@ -605,7 +605,7 @@ void Window::idleCallback()
 					currAstro[0] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				/*astroTransform[i]->removeChild(0);
+				astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -669,7 +669,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}*/
+				}
 			}
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerStopsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
@@ -678,22 +678,7 @@ void Window::idleCallback()
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerRestartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
-			if (nonplayerWalkingDirOption[i-1] == 0)
-			{
-				;
-			}
-			if (nonplayerWalkingDirOption[i-1] == 1)
-			{
-				;
-			}
-			if (nonplayerWalkingDirOption[i-1] == 2)
-			{
-				;
-			}
-			if (nonplayerWalkingDirOption[i-1] == 3)
-			{
-				;
-			}
+			
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{
