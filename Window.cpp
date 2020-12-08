@@ -691,8 +691,8 @@ void Window::idleCallback()
 		{
 			if (currAstroAppeared[i])
 			{
-				currAstroAppeared[i] = false;
-				astroTransform[i]->removeChild(0);
+				//currAstroAppeared[i] = false;
+				//lobbyTransform->removeChild(i+1);
 			}
 		}
 	}
