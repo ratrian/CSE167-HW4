@@ -321,7 +321,7 @@ void Window::idleCallback()
 					currAstro[i] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				astroTransform[i]->removeChild(0);
+				/*astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -385,7 +385,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}
+				}*/
 			}
 			if (nonplayerWalkingDirOption[i-1] == 1)
 			{
