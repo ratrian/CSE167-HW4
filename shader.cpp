@@ -61,7 +61,7 @@ GLuint LoadSingleShader(const char * shaderFilePath, ShaderType type)
 	return shaderID;
 }
 
-GLuint LoadShaders(const char * vertexFilePath, const char * fragmentFilePath) 
+GLuint LoadShaders(const char* vertexFilePath, const char* fragmentFilePath)
 {
 	// Create the vertex shader and fragment shader.
 	GLuint vertexShaderID = LoadSingleShader(vertexFilePath, vertex);
@@ -83,7 +83,7 @@ GLuint LoadShaders(const char * vertexFilePath, const char * fragmentFilePath)
 	// Check the program.
 	glGetProgramiv(programID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (InfoLogLength > 1) 
+	if (InfoLogLength > 1)
 	{
 		std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
 		glGetProgramInfoLog(programID, InfoLogLength, NULL, ProgramErrorMessage.data());
