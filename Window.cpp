@@ -299,7 +299,6 @@ void Window::idleCallback()
 				astroTransform[i]->addChild(currAstro[i]);
 				numNonplayers++;
 				nonplayerIdx[i-1] = numNonplayers + 1;
-				cout << nonplayerIdx[i-1] << endl;
 			}
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerStartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
@@ -698,16 +697,16 @@ void Window::idleCallback()
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{
-			if (currAstroAppeared[i])
+			if (nonplayerIdx[i-1] != -1)
 			{
-				/*currAstroAppeared[i] = false;
+				currAstroAppeared[i] = false;
 				lobbyTransform->removeChild(nonplayerIdx[i-1]);
-				nonplayerIdx[i-1] = -1;
 				for (unsigned j = 0; j < 9; j++) {
-					if (nonplayerIdx[j] != 0)
+					if (j != i-1 && nonplayerIdx[j] > nonplayerIdx[i-1])
 						nonplayerIdx[j]--;
 				}
-				numNonplayers--;*/
+				nonplayerIdx[i-1] = -1;
+				numNonplayers--;
 			}
 		}
 	}
