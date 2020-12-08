@@ -689,7 +689,11 @@ void Window::idleCallback()
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{
-			//astroTransform[i]->removeChild(0);
+			if (currAstroAppeared[i])
+			{
+				currAstroAppeared[i] = false;
+				astroTransform[i]->removeChild(0);
+			}
 		}
 	}
 }
