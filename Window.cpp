@@ -130,6 +130,7 @@ bool Window::initializeObjects()
 	astroMoving2[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[0]->getBoundingSphere()->getCenter().x, astroMoving2[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[0]->getBoundingSphere()->getCenter().z + 8.0f), astroMoving2[0]->getBoundingSphere()->getRadius()));
 	currAstro[0] = astroStill[0];
 	astroTransform[0]->addChild(currAstro[0]);
+	currAstroAppeared[0] = true;
 	currAstroFacingDir[0] = "south";
 	for (unsigned i = 1; i < 10; i++) {
 		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
