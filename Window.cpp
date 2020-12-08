@@ -682,6 +682,9 @@ void Window::idleCallback()
 		{
 			nonplayerStartsWalking[i-1] = false;
 			timeUntilNonplayerStopsWalking[i-1] += rand() % 10 + 1;
+			currAstro[i] = astroStill[i];
+			astroTransform[i]->removeChild(0);
+			astroTransform[i]->addChild(currAstro[i]);
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerRestartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
