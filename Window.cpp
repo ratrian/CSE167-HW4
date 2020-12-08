@@ -108,7 +108,6 @@ bool Window::initializeObjects()
 	for (unsigned i = 1; i < 10; i++) {
 		astroTransform[i] = new Transform();
 		astroTransform[i]->translate(glm::vec3(-16.5f + float(i * 3.5), -3.0f, 0.0f));
-		lobbyTransform->addChild(astroTransform[i]);
 	}
 
 	astroMaterial[0] = new Material(glm::vec3(62.0f/255.0f, 71.0f/255.0f, 78.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
@@ -143,6 +142,7 @@ bool Window::initializeObjects()
 		astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroMoving2[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[i]->getBoundingSphere()->getCenter().z), astroMoving2[i]->getBoundingSphere()->getRadius()));
 
 		currAstro[i] = astroStill[i];
+		astroTransform[i]->addChild(currAstro[i]);
 		currAstroAppeared[i] = false;
 		currAstroFacingDir[i] = "south";
 		
@@ -295,7 +295,7 @@ void Window::idleCallback()
 			if (!currAstroAppeared[i])
 			{
 				currAstroAppeared[i] = true;
-				astroTransform[i]->addChild(currAstro[i]);
+				lobbyTransform->addChild(astroTransform[i]);
 				numNonplayers++;
 				nonplayerIdx[i-1] = numNonplayers + 1;
 			}
