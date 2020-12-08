@@ -35,6 +35,8 @@ float Window::timeUntilNonplayerStartsWalking[9];
 float Window::timeUntilNonplayerStopsWalking[9];
 float Window::timeUntilNonplayerRestartsWalking[9];
 float Window::timeUntilNonplayerDisappears[9];
+int nonplayerIdx[9];
+unsigned numNonplayers = 0;
 float startingTime;
 
 BoundingSphere* Window::boxBoundingSphere[2];
@@ -151,6 +153,7 @@ bool Window::initializeObjects()
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 10;
 		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + rand() % 10;
 		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + rand() % 30;
+		nonplayerIdx[i-1] = -1;
 	}
 	startingTime = glfwGetTime();
 
@@ -289,9 +292,15 @@ void Window::idleCallback()
 	for (unsigned i = 1; i < 10; i++) {
 		if (currTime - startingTime >= nonplayerAppearanceTime[i-1] && currTime - startingTime < timeUntilNonplayerStartsWalking[i-1])
 		{
-			currAstroAppeared[i] = true;
-			currAstro[i] = astroStill[i];
-			astroTransform[i]->addChild(currAstro[i]);
+			if (!currAstroAppeared[i])
+			{
+				currAstroAppeared[i] = true;
+				currAstro[i] = astroStill[i];
+				astroTransform[i]->addChild(currAstro[i]);
+				numNonplayers++;
+				nonplayerIdx[i-1] = numNonplayers + 1;
+				cout << nonplayerIdx[i-1] << endl;
+			}
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerStartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
@@ -691,8 +700,14 @@ void Window::idleCallback()
 		{
 			if (currAstroAppeared[i])
 			{
-				//currAstroAppeared[i] = false;
-				//lobbyTransform->removeChild(i+1);
+				/*currAstroAppeared[i] = false;
+				lobbyTransform->removeChild(nonplayerIdx[i-1]);
+				nonplayerIdx[i-1] = -1;
+				for (unsigned j = 0; j < 9; j++) {
+					if (nonplayerIdx[j] != 0)
+						nonplayerIdx[j]--;
+				}
+				numNonplayers--;*/
 			}
 		}
 	}
