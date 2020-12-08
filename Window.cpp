@@ -142,8 +142,6 @@ bool Window::initializeObjects()
 		astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroMoving2[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[i]->getBoundingSphere()->getCenter().z), astroMoving2[i]->getBoundingSphere()->getRadius()));
 
 		currAstroAppeared[i] = false;
-		//currAstro[i] = astroStill[i];
-		//astroTransform[i]->addChild(currAstro[i]);
 		currAstroFacingDir[i] = "south";
 		
 		srand(i-1);
