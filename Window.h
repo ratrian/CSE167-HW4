@@ -37,7 +37,7 @@ public:
 	static Geometry* astroMoving1[10];
 	static Geometry* astroMoving2[10];
 
-	static float nonplayerWalkingDirOption[9], nonplayerAppearanceTime[9], timeUntilNonplayerStartsWalking[9], timeUntilNonplayerStopsWalking[9], timeUntilNonplayerRestartsWalking[9], timeUntilNonplayerDisappears[9];
+	static float nonplayerWalkingDirOption[9], timeUntilNonplayerAppears[9], timeUntilNonplayerStartsWalking[9], timeUntilNonplayerStopsWalking[9], timeUntilNonplayerRestartsWalking[9], timeUntilNonplayerDisappears[9];
 
 	static BoundingSphere* boxBoundingSphere[2];
 	static BoundingPlane* wallBoundingPlane[6];

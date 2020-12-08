@@ -30,7 +30,7 @@ string currAstroFacingDir[10];
 Geometry* currAstro[10];
 
 float Window::nonplayerWalkingDirOption[9];
-float Window::nonplayerAppearanceTime[9];
+float Window::timeUntilNonplayerAppears[9];
 float Window::timeUntilNonplayerStartsWalking[9];
 float Window::timeUntilNonplayerStopsWalking[9];
 float Window::timeUntilNonplayerRestartsWalking[9];
@@ -148,8 +148,8 @@ bool Window::initializeObjects()
 		
 		srand(i-1);
 		nonplayerWalkingDirOption[i-1] = rand() % 4;
-		nonplayerAppearanceTime[i-1] = rand() % 15;
-		timeUntilNonplayerStartsWalking[i-1] = nonplayerAppearanceTime[i-1] + (rand() % 5 + 1);
+		timeUntilNonplayerAppears[i-1] = rand() % 15;
+		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 5 + 1);
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 10 + 1);
 		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
 		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 30 + 1);
@@ -290,7 +290,7 @@ void Window::idleCallback()
 	
 	float currTime = glfwGetTime();
 	for (unsigned i = 1; i < 10; i++) {
-		if (currTime - startingTime >= nonplayerAppearanceTime[i-1] && currTime - startingTime < timeUntilNonplayerStartsWalking[i-1])
+		if (currTime - startingTime >= timeUntilNonplayerAppears[i-1] && currTime - startingTime < timeUntilNonplayerStartsWalking[i-1])
 		{
 			if (!currAstroAppeared[i])
 			{
