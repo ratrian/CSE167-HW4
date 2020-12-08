@@ -284,16 +284,18 @@ void Window::idleCallback()
 {
 	// Perform any necessary updates here
 	discoball->update();
+	
+	float currTime = glfwGetTime();
 	for (unsigned i = 1; i < 10; i++) {
-		if (glfwGetTime() - startingTime >= nonplayerAppearanceTime[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerStartsWalking[i-1])
+		if (currTime - startingTime >= nonplayerAppearanceTime[i-1] && currTime - startingTime < timeUntilNonplayerStartsWalking[i-1])
 		{
 			currAstroAppeared[i] = true;
 			currAstro[i] = astroStill[i];
 			astroTransform[i]->addChild(currAstro[i]);
 		}
-		else if (glfwGetTime() - startingTime >= timeUntilNonplayerStartsWalking[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerDisappears[i-1])
+		else if (currTime - startingTime >= timeUntilNonplayerStartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
-			/*if (nonplayerWalkingDirOption[i-1] == 0)
+			if (nonplayerWalkingDirOption[i-1] == 0)
 			{
 				bool collision = false;
 				if (currAstroFacingDir[i].compare("south") == 0)
@@ -411,7 +413,7 @@ void Window::idleCallback()
 					currAstro[i] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				astroTransform[i]->removeChild(0);
+				/*astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -475,7 +477,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}
+				}*/
 			}
 			if (nonplayerWalkingDirOption[i-1] == 2)
 			{
@@ -503,7 +505,7 @@ void Window::idleCallback()
 					currAstro[i] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				astroTransform[i]->removeChild(0);
+				/*astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -567,7 +569,7 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}
+				}*/
 			}
 			if (nonplayerWalkingDirOption[i-1] == 3)
 			{
@@ -595,7 +597,7 @@ void Window::idleCallback()
 					currAstro[0] = astroMoving1[i];
 				else if (currAstro[i] == astroMoving1[i])
 					currAstro[i] = astroMoving2[i];
-				astroTransform[i]->removeChild(0);
+				/*astroTransform[i]->removeChild(0);
 				astroTransform[i]->addChild(currAstro[i]);
 				for (unsigned j = 0; j < 2; j++) {
 					if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
@@ -659,14 +661,14 @@ void Window::idleCallback()
 					astroTransform[i]->removeChild(0);
 					astroTransform[i]->addChild(currAstro[i]);
 					continue;
-				}
-			}*/
+				}*/
+			}
 		}
-		else if (glfwGetTime() - startingTime >= timeUntilNonplayerStopsWalking[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerDisappears[i-1])
+		else if (currTime - startingTime >= timeUntilNonplayerStopsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
 
 		}
-		else if (glfwGetTime() - startingTime >= timeUntilNonplayerRestartsWalking[i-1] && glfwGetTime() - startingTime < timeUntilNonplayerDisappears[i-1])
+		else if (currTime - startingTime >= timeUntilNonplayerRestartsWalking[i-1] && currTime - startingTime < timeUntilNonplayerDisappears[i-1])
 		{
 			if (nonplayerWalkingDirOption[i-1] == 0)
 			{
@@ -685,7 +687,7 @@ void Window::idleCallback()
 				;
 			}
 		}
-		else if (glfwGetTime() - startingTime >= timeUntilNonplayerDisappears[i-1])
+		else if (currTime - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{
 			//astroTransform[i]->removeChild(0);
 		}
