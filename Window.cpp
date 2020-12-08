@@ -340,7 +340,7 @@ void Window::idleCallback()
 				if (nonplayerCollision)
 				{
 					nonplayerCollision = false;
-					nonplayerWalkingDirOption[i-1] = 1;
+					nonplayerWalkingDirOption[i-1] = 3;
 					astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, 0.1f));
 					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -360,7 +360,7 @@ void Window::idleCallback()
 				if (nonplayerCollision)
 				{
 					nonplayerCollision = false;
-					nonplayerWalkingDirOption[i-1] = 1;
+					nonplayerWalkingDirOption[i-1] = 3;
 					astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, 0.1f));
 					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -383,7 +383,7 @@ void Window::idleCallback()
 				if (nonplayerCollision)
 				{
 					nonplayerCollision = false;
-					nonplayerWalkingDirOption[i-1] = 1;
+					nonplayerWalkingDirOption[i-1] = 3;
 					astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, 0.1f));
 					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -524,7 +524,7 @@ void Window::idleCallback()
 				if (nonplayerCollision)
 				{
 					nonplayerCollision = false;
-					nonplayerWalkingDirOption[i-1] = 3;
+					nonplayerWalkingDirOption[i-1] = 1;
 					astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, -0.1f));
 					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -544,7 +544,7 @@ void Window::idleCallback()
 				if (nonplayerCollision)
 				{
 					nonplayerCollision = false;
-					nonplayerWalkingDirOption[i-1] = 3;
+					nonplayerWalkingDirOption[i-1] = 1;
 					astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, -0.1f));
 					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -567,7 +567,7 @@ void Window::idleCallback()
 				if (nonplayerCollision)
 				{
 					nonplayerCollision = false;
-					nonplayerWalkingDirOption[i-1] = 3;
+					nonplayerWalkingDirOption[i-1] = 1;
 					astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, -0.1f));
 					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
