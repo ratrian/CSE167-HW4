@@ -146,12 +146,47 @@ bool Window::initializeObjects()
 		currAstro[i] = astroStill[i];
 		astroTransform[i]->addChild(currAstro[i]);
 		currAstroAppeared[i] = false;
-		currAstroFacingDir[i] = "south";
-		
 		nonplayerStartsWalking[i-1] = true;
 
 		srand(i-1);
-		nonplayerWalkingDirOption[i-1] = rand() % 4;
+		nonplayerWalkingDirOption[i-1] = rand() % 8;
+		if (nonplayerWalkingDirOption[i-1] == 0)
+		{
+			currAstroFacingDir[i] = "north";
+			astroTransform[i]->rotate(1.0418f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else if (nonplayerWalkingDirOption[i-1] == 1)
+		{
+			currAstroFacingDir[i] = "west";
+			astroTransform[i]->rotate(0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else if (nonplayerWalkingDirOption[i-1] == 2)
+			currAstroFacingDir[i] = "south";
+		else if (nonplayerWalkingDirOption[i-1] == 3)
+		{
+			currAstroFacingDir[i] = "east";
+			astroTransform[i]->rotate(-0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else if (nonplayerWalkingDirOption[i-1] == 4)
+		{
+			currAstroFacingDir[i] = "northeast";
+			astroTransform[i]->rotate(0.26f, glm::vec3(0.26f, 1.0f, 0.0f));
+		}
+		else if (nonplayerWalkingDirOption[i-1] == 5)
+		{
+			currAstroFacingDir[i] = "northwest";
+			astroTransform[i]->rotate(-0.26f, glm::vec3(-0.26f, 1.0f, 0.0f));
+		}
+		else if (nonplayerWalkingDirOption[i-1] == 6)
+		{
+			currAstroFacingDir[i] = "southwest";
+			astroTransform[i]->rotate(-0.7818f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else if (nonplayerWalkingDirOption[i-1] == 7)
+		{
+			currAstroFacingDir[i] = "southeast";
+			astroTransform[i]->rotate(0.7818f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
 		timeUntilNonplayerAppears[i-1] = rand() % 15;
 		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 5 + 1);
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 10 + 1);
@@ -683,6 +718,374 @@ void Window::idleCallback()
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
 						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z), astroMoving1[i]->getBoundingSphere()->getRadius()));
 						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+				}
+				if (nonplayerWalkingDirOption[i - 1] == 4)
+				{
+					bool nonplayerCollision = false;
+					if (currAstroFacingDir[i].compare("southwest") == 0)
+					{
+						currAstroFacingDir[i] = "northeast";
+						astroTransform[i]->rotate(1.0418f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("southeast") == 0)
+					{
+						currAstroFacingDir[i] = "northeast";
+						astroTransform[i]->rotate(-0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("northwest") == 0)
+					{
+						currAstroFacingDir[i] = "northeast";
+						astroTransform[i]->rotate(0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, -0.1f));
+					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+					astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+					if (currAstro[i] == astroStill[i] || currAstro[i] == astroMoving2[i])
+						currAstro[i] = astroMoving1[i];
+					else if (currAstro[i] == astroMoving1[i])
+						currAstro[i] = astroMoving2[i];
+					astroTransform[i]->removeChild(0);
+					astroTransform[i]->addChild(currAstro[i]);
+					for (unsigned j = 0; j < 2; j++) {
+						if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 7;
+						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, 0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 6; j++) {
+						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 7;
+						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, 0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 10; j++) {
+						if (j != i && currAstroAppeared[j])
+						{
+							if (currAstro[j]->getBoundingSphere()->collide(*currAstro[i]->getBoundingSphere()))
+							{
+								nonplayerCollision = true;
+								break;
+							}
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 7;
+						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, 0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+				}
+				if (nonplayerWalkingDirOption[i - 1] == 5)
+				{
+					bool nonplayerCollision = false;
+					if (currAstroFacingDir[i].compare("southwest") == 0)
+					{
+						currAstroFacingDir[i] = "northwest";
+						astroTransform[i]->rotate(0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("northeast") == 0)
+					{
+						currAstroFacingDir[i] = "northwest";
+						astroTransform[i]->rotate(-0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("southeast") == 0)
+					{
+						currAstroFacingDir[i] = "northwest";
+						astroTransform[i]->rotate(1.0418f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, -0.1f));
+					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+					astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+					if (currAstro[i] == astroStill[i] || currAstro[i] == astroMoving2[i])
+						currAstro[i] = astroMoving1[i];
+					else if (currAstro[i] == astroMoving1[i])
+						currAstro[i] = astroMoving2[i];
+					astroTransform[i]->removeChild(0);
+					astroTransform[i]->addChild(currAstro[i]);
+					for (unsigned j = 0; j < 2; j++) {
+						if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 6;
+						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, 0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 6; j++) {
+						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 6;
+						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, 0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 10; j++) {
+						if (j != i && currAstroAppeared[j])
+						{
+							if (currAstro[j]->getBoundingSphere()->collide(*currAstro[i]->getBoundingSphere()))
+							{
+								nonplayerCollision = true;
+								break;
+							}
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 6;
+						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, 0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+				}
+				if (nonplayerWalkingDirOption[i - 1] == 6)
+				{
+					bool nonplayerCollision = false;
+					if (currAstroFacingDir[i].compare("northeast") == 0)
+					{
+						currAstroFacingDir[i] = "southwest";
+						astroTransform[i]->rotate(1.0418f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("southeast") == 0)
+					{
+						currAstroFacingDir[i] = "southwest";
+						astroTransform[i]->rotate(0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("northwest") == 0)
+					{
+						currAstroFacingDir[i] = "southwest";
+						astroTransform[i]->rotate(-0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, 0.1f));
+					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+					astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+					if (currAstro[i] == astroStill[i] || currAstro[i] == astroMoving2[i])
+						currAstro[i] = astroMoving1[i];
+					else if (currAstro[i] == astroMoving1[i])
+						currAstro[i] = astroMoving2[i];
+					astroTransform[i]->removeChild(0);
+					astroTransform[i]->addChild(currAstro[i]);
+					for (unsigned j = 0; j < 2; j++) {
+						if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 5;
+						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, -0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 6; j++) {
+						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 5;
+						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, -0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 10; j++) {
+						if (j != i && currAstroAppeared[j])
+						{
+							if (currAstro[j]->getBoundingSphere()->collide(*currAstro[i]->getBoundingSphere()))
+							{
+								nonplayerCollision = true;
+								break;
+							}
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 5;
+						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, -0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+				}
+				if (nonplayerWalkingDirOption[i - 1] == 7)
+				{
+					bool nonplayerCollision = false;
+					if (currAstroFacingDir[i].compare("southwest") == 0)
+					{
+						currAstroFacingDir[i] = "southeast";
+						astroTransform[i]->rotate(-0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("northeast") == 0)
+					{
+						currAstroFacingDir[i] = "southeast";
+						astroTransform[i]->rotate(0.52f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					else if (currAstroFacingDir[i].compare("northwest") == 0)
+					{
+						currAstroFacingDir[i] = "southeast";
+						astroTransform[i]->rotate(1.0418f, glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, 0.1f));
+					astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+					astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+					astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z + 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+					if (currAstro[i] == astroStill[i] || currAstro[i] == astroMoving2[i])
+						currAstro[i] = astroMoving1[i];
+					else if (currAstro[i] == astroMoving1[i])
+						currAstro[i] = astroMoving2[i];
+					astroTransform[i]->removeChild(0);
+					astroTransform[i]->addChild(currAstro[i]);
+					for (unsigned j = 0; j < 2; j++) {
+						if (boxBoundingSphere[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 4;
+						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, -0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 6; j++) {
+						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
+						{
+							nonplayerCollision = true;
+							break;
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 4;
+						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, -0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
+						currAstro[i] = astroStill[i];
+						astroTransform[i]->removeChild(0);
+						astroTransform[i]->addChild(currAstro[i]);
+						continue;
+					}
+					for (unsigned j = 0; j < 10; j++) {
+						if (j != i && currAstroAppeared[j])
+						{
+							if (currAstro[j]->getBoundingSphere()->collide(*currAstro[i]->getBoundingSphere()))
+							{
+								nonplayerCollision = true;
+								break;
+							}
+						}
+					}
+					if (nonplayerCollision)
+					{
+						nonplayerCollision = false;
+						nonplayerWalkingDirOption[i - 1] = 4;
+						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, -0.1f));
+						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
+						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
+						astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving2[i]->getBoundingSphere()->getCenter().y, astroMoving2[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving2[i]->getBoundingSphere()->getRadius()));
 						currAstro[i] = astroStill[i];
 						astroTransform[i]->removeChild(0);
 						astroTransform[i]->addChild(currAstro[i]);
