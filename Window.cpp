@@ -448,7 +448,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 1)
+				else if (nonplayerWalkingDirOption[i - 1] == 1)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
@@ -549,7 +549,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 2)
+				else if (nonplayerWalkingDirOption[i - 1] == 2)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
@@ -652,7 +652,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 3)
+				else if (nonplayerWalkingDirOption[i - 1] == 3)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
@@ -753,7 +753,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 4)
+				else if (nonplayerWalkingDirOption[i - 1] == 4)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
@@ -854,7 +854,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 5)
+				else if (nonplayerWalkingDirOption[i - 1] == 5)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
@@ -955,7 +955,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 6)
+				else if (nonplayerWalkingDirOption[i - 1] == 6)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
@@ -1058,7 +1058,7 @@ void Window::idleCallback()
 						continue;
 					}
 				}
-				if (nonplayerWalkingDirOption[i - 1] == 7)
+				else if (nonplayerWalkingDirOption[i - 1] == 7)
 				{
 					bool nonplayerCollision = false;
 					bool wallColliding[6];
