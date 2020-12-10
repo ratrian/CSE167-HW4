@@ -29,7 +29,7 @@ bool currAstroAppeared[10];
 string currAstroFacingDir[10];
 Geometry* currAstro[10];
 
-bool Window::nonplayerStartsWalking[9];
+bool Window::nonplayerIsWalking[9];
 
 float Window::nonplayerWalkingDirOption[9];
 float Window::timeUntilNonplayerAppears[9];
@@ -146,7 +146,7 @@ bool Window::initializeObjects()
 		currAstro[i] = astroStill[i];
 		astroTransform[i]->addChild(currAstro[i]);
 		currAstroAppeared[i] = false;
-		nonplayerStartsWalking[i-1] = true;
+		nonplayerIsWalking[i-1] = true;
 
 		srand(i + time(NULL));
 		nonplayerWalkingDirOption[i-1] = rand() % 8;
@@ -343,7 +343,7 @@ void Window::idleCallback()
 		{
 			if (currTime - startingTime >= timeUntilNonplayerStopsWalking[i-1])
 			{
-				nonplayerStartsWalking[i-1] = false;
+				nonplayerIsWalking[i-1] = false;
 				timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerRestartsWalking[i-1] + (rand() % 10 + 1);
 				currAstro[i] = astroStill[i];
 				astroTransform[i]->removeChild(0);
@@ -351,10 +351,10 @@ void Window::idleCallback()
 			}
 			else if (currTime - startingTime >= timeUntilNonplayerRestartsWalking[i-1])
 			{
-				nonplayerStartsWalking[i-1] = true;
+				nonplayerIsWalking[i-1] = true;
 				timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
 			}
-			if (nonplayerStartsWalking[i - 1])
+			if (nonplayerIsWalking[i - 1])
 			{
 				if (nonplayerWalkingDirOption[i - 1] == 0)
 				{
@@ -1165,7 +1165,7 @@ void Window::idleCallback()
 		}
 		else if (currTime - startingTime >= timeUntilNonplayerDisappears[i-1])
 		{	
-			nonplayerStartsWalking[i-1] = false;
+			nonplayerIsWalking[i-1] = false;
 			if (nonplayerIdx[i-1] != -1)
 			{
 				currAstroAppeared[i] = false;
