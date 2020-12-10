@@ -148,7 +148,7 @@ bool Window::initializeObjects()
 		currAstroAppeared[i] = false;
 		nonplayerStartsWalking[i-1] = true;
 
-		srand(i-1);
+		srand(i + time(NULL));
 		nonplayerWalkingDirOption[i-1] = rand() % 8;
 		if (nonplayerWalkingDirOption[i-1] == 0)
 		{
@@ -187,11 +187,11 @@ bool Window::initializeObjects()
 			currAstroFacingDir[i] = "southeast";
 			astroTransform[i]->rotate(0.7818f, glm::vec3(0.0f, 1.0f, 0.0f));
 		}
-		timeUntilNonplayerAppears[i-1] = rand() % 15;
+		timeUntilNonplayerAppears[i-1] = rand() % 20;
 		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 5 + 1);
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 10 + 1);
-		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
-		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 30 + 1);
+		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 5 + 1);
+		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 60 + 1);
 		nonplayerIdx[i-1] = -1;
 	}
 	startingTime = glfwGetTime();
@@ -451,6 +451,11 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 1)
 				{
 					bool nonplayerCollision = false;
+					bool wallColliding[6];
+					for (unsigned j = 0; j < 6; j++)
+					{
+						wallColliding[j] = false;
+					}
 					if (currAstroFacingDir[i].compare("south") == 0)
 					{
 						currAstroFacingDir[i] = "west";
@@ -500,13 +505,17 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						nonplayerWalkingDirOption[i - 1] = 3;
+						if (wallColliding[1] || wallColliding[5])
+							nonplayerWalkingDirOption[i - 1] = 3;
+						else if (wallColliding[2] || wallColliding[4])
+							nonplayerWalkingDirOption[i - 1] = 0;
 						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, 0.0f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
 						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x + 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -543,6 +552,11 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 2)
 				{
 					bool nonplayerCollision = false;
+					bool wallColliding[6];
+					for (unsigned j = 0; j < 6; j++)
+					{
+						wallColliding[j] = false;
+					}
 					if (currAstroFacingDir[i].compare("north") == 0)
 					{
 						currAstroFacingDir[i] = "south";
@@ -592,13 +606,19 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						nonplayerWalkingDirOption[i - 1] = 0;
+						if (wallColliding[0] || wallColliding[3])
+							nonplayerWalkingDirOption[i - 1] = 0;
+						else if (wallColliding[2])
+							nonplayerWalkingDirOption[i - 1] = 1;
+						else if (wallColliding[4])
+							nonplayerWalkingDirOption[i - 1] = 3;
 						astroTransform[i]->translate(glm::vec3(0.0f, 0.0f, -0.1f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
 						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z - 0.1f), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -635,6 +655,11 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 3)
 				{
 					bool nonplayerCollision = false;
+					bool wallColliding[6];
+					for (unsigned j = 0; j < 6; j++)
+					{
+						wallColliding[j] = false;
+					}
 					if (currAstroFacingDir[i].compare("south") == 0)
 					{
 						currAstroFacingDir[i] = "east";
@@ -684,13 +709,17 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						nonplayerWalkingDirOption[i - 1] = 1;
+						if (wallColliding[1] || wallColliding[5])
+							nonplayerWalkingDirOption[i - 1] = 1;
+						else if (wallColliding[2] || wallColliding[4])
+							nonplayerWalkingDirOption[i - 1] = 0;
 						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, 0.0f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
 						astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 0.1f, astroMoving1[i]->getBoundingSphere()->getCenter().y, astroMoving1[i]->getBoundingSphere()->getCenter().z), astroMoving1[i]->getBoundingSphere()->getRadius()));
@@ -727,10 +756,10 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 4)
 				{
 					bool nonplayerCollision = false;
-					bool planeColliding[6];
+					bool wallColliding[6];
 					for (unsigned j = 0; j < 6; j++)
 					{
-						planeColliding[j] = false;
+						wallColliding[j] = false;
 					}
 					if (currAstroFacingDir[i].compare("southwest") == 0)
 					{
@@ -781,16 +810,16 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
-							planeColliding[j] = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						if (planeColliding[0] || planeColliding[3])
+						if (wallColliding[0] || wallColliding[3])
 							nonplayerWalkingDirOption[i - 1] = 7;
-						else if (planeColliding[1] || planeColliding[5])
+						else if (wallColliding[1] || wallColliding[5])
 							nonplayerWalkingDirOption[i - 1] = 5;
 						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, 0.1f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
@@ -828,10 +857,10 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 5)
 				{
 					bool nonplayerCollision = false;
-					bool planeColliding[6];
+					bool wallColliding[6];
 					for (unsigned j = 0; j < 6; j++)
 					{
-						planeColliding[j] = false;
+						wallColliding[j] = false;
 					}
 					if (currAstroFacingDir[i].compare("southwest") == 0)
 					{
@@ -882,16 +911,16 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
-							planeColliding[j] = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						if (planeColliding[0] || planeColliding[3])
+						if (wallColliding[0] || wallColliding[3])
 							nonplayerWalkingDirOption[i - 1] = 6;
-						else if (planeColliding[1] || planeColliding[5])
+						else if (wallColliding[1] || wallColliding[5])
 							nonplayerWalkingDirOption[i - 1] = 4;
 						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, 0.1f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z + 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
@@ -929,10 +958,10 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 6)
 				{
 					bool nonplayerCollision = false;
-					bool planeColliding[6];
+					bool wallColliding[6];
 					for (unsigned j = 0; j < 6; j++)
 					{
-						planeColliding[j] = false;
+						wallColliding[j] = false;
 					}
 					if (currAstroFacingDir[i].compare("northeast") == 0)
 					{
@@ -983,18 +1012,18 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
-							planeColliding[j] = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						if (planeColliding[0] || planeColliding[3])
+						if (wallColliding[0] || wallColliding[3])
 							nonplayerWalkingDirOption[i - 1] = 5;
-						else if (planeColliding[1] || planeColliding[5])
+						else if (wallColliding[1] || wallColliding[5])
 							nonplayerWalkingDirOption[i - 1] = 7;
-						else if (planeColliding[2] || planeColliding[4])
+						else if (wallColliding[2] || wallColliding[4])
 							nonplayerWalkingDirOption[i - 1] = 4;
 						astroTransform[i]->translate(glm::vec3(0.1f, 0.0f, -0.1f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x + 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));
@@ -1032,10 +1061,10 @@ void Window::idleCallback()
 				if (nonplayerWalkingDirOption[i - 1] == 7)
 				{
 					bool nonplayerCollision = false;
-					bool planeColliding[6];
+					bool wallColliding[6];
 					for (unsigned j = 0; j < 6; j++)
 					{
-						planeColliding[j];
+						wallColliding[j];
 					}
 					if (currAstroFacingDir[i].compare("southwest") == 0)
 					{
@@ -1086,18 +1115,18 @@ void Window::idleCallback()
 						if (wallBoundingPlane[j]->collide(*currAstro[i]->getBoundingSphere()))
 						{
 							nonplayerCollision = true;
-							planeColliding[j] = true;
+							wallColliding[j] = true;
 							break;
 						}
 					}
 					if (nonplayerCollision)
 					{
 						nonplayerCollision = false;
-						if (planeColliding[0] || planeColliding[3])
+						if (wallColliding[0] || wallColliding[3])
 							nonplayerWalkingDirOption[i - 1] = 4;
-						else if (planeColliding[1] || planeColliding[5])
+						else if (wallColliding[1] || wallColliding[5])
 							nonplayerWalkingDirOption[i - 1] = 6;
-						else if (planeColliding[2] || planeColliding[4])
+						else if (wallColliding[2] || wallColliding[4])
 							nonplayerWalkingDirOption[i - 1] = 5;
 						astroTransform[i]->translate(glm::vec3(-0.1f, 0.0f, -0.1f));
 						astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 0.1f, astroStill[i]->getBoundingSphere()->getCenter().y, astroStill[i]->getBoundingSphere()->getCenter().z - 0.1f), astroStill[i]->getBoundingSphere()->getRadius()));

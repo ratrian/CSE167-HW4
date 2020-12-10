@@ -161,7 +161,7 @@ Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSi
 			maxDist = sqrt((points[i].x) * (points[i].x) + (points[i].y) * (points[i].y) + (points[i].z) * (points[i].z));
 	}
 
-	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), 4.0f/5.0f * maxDist);
+	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), 0.8f * maxDist);
 
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
