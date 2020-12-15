@@ -199,13 +199,13 @@ bool Window::initializeObjects()
 		astroStill[i]->setAppearanceTime(timeUntilNonplayerAppears[i-1]);
 		astroMoving1[i]->setAppearanceTime(timeUntilNonplayerAppears[i-1]);
 		astroMoving2[i]->setAppearanceTime(timeUntilNonplayerAppears[i-1]);
-		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 10 + 1);
+		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 10 + 3);
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 15 + 1);
 		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
-		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 90 + 1);
-		astroStill[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1]);
-		astroMoving1[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1]);
-		astroMoving2[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1]);
+		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 90 + 3);
+		astroStill[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1] - 3.0f);
+		astroMoving1[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1] - 3.0f);
+		astroMoving2[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1] - 3.0f);
 		nonplayerIdx[i-1] = -1;
 	}
 	startingTime = glfwGetTime();
