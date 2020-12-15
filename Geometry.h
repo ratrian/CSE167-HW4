@@ -31,8 +31,8 @@ private:
 
 	BoundingSphere* boundingSphere;
 
-	ParticleSystem* appearance;
-	ParticleSystem* disappearance;
+	ParticleSystem* appearanceEffect;
+	ParticleSystem* disappearanceEffect;
 
 public:
 	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat drawAstro, Material* material);

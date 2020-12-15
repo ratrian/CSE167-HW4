@@ -163,6 +163,9 @@ Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSi
 
 	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), 0.8f * maxDist);
 
+	appearanceEffect = new ParticleSystem(points, true);
+	appearanceEffect = new ParticleSystem(points, false);
+
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -239,6 +242,8 @@ Geometry::~Geometry()
 	glDeleteVertexArrays(1, &VAO);
 
 	delete boundingSphere;
+	delete appearanceEffect;
+	delete disappearanceEffect;
 }
 
 void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
