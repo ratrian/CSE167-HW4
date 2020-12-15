@@ -276,8 +276,11 @@ void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat
 	// Unbind the shader program
 	glUseProgram(0);
 
-	//appearanceEffect->draw(particleShaderProgram, currModel, currTime - appearanceTime);
-	//disappearanceEffect->draw(particleShaderProgram, currModel, currTime - disappearanceTime);
+	if (drawAstro == 1.0)
+	{
+		//appearanceEffect->draw(particleShaderProgram, currModel, currTime - appearanceTime);
+		//disappearanceEffect->draw(particleShaderProgram, currModel, currTime - disappearanceTime);
+	}
 }
 
 void Geometry::update()
