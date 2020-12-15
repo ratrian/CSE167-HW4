@@ -60,7 +60,8 @@ glm::mat4 Window::view = glm::lookAt(Window::eyePos, Window::lookAtPoint, Window
 
 // Shader Program ID
 GLuint Window::shaderProgram;
-
+// Particle Shader Program ID
+GLuint Window::particleShaderProgram;
 // Skybox Shader Program ID
 GLuint Window::skyboxShaderProgram;
 
@@ -246,6 +247,10 @@ void Window::cleanUp()
 
 	// Delete the shader program.
 	glDeleteProgram(shaderProgram);
+	// Delete the particle shader program.
+	glDeleteProgram(particleShaderProgram);
+	// Delete the skybox shader program.
+	glDeleteProgram(skyboxShaderProgram);
 }
 
 GLFWwindow* Window::createWindow(int width, int height)
