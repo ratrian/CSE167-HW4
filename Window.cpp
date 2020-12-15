@@ -131,13 +131,10 @@ bool Window::initializeObjects()
 	astroMaterial[9] = new Material(glm::vec3(246.0f/255.0f, 246.0f/255.0f, 87.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	
 	astroStill[0] = new Geometry("amongus_astro_still.obj", 0.5f, 1.0f, astroMaterial[0]);
-	astroStill[0]->setAppearanceTime(0.0f);
 	astroStill[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[0]->getBoundingSphere()->getCenter().x, astroStill[0]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[0]->getBoundingSphere()->getCenter().z + 8.0f), astroStill[0]->getBoundingSphere()->getRadius()));
 	astroMoving1[0] = new Geometry("amongus_astro_moving1.obj", 0.5f, 1.0f, astroMaterial[0]);
-	astroMoving1[0]->setAppearanceTime(0.0f);
 	astroMoving1[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[0]->getBoundingSphere()->getCenter().x, astroMoving1[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving1[0]->getBoundingSphere()->getCenter().z + 8.0f), astroMoving1[0]->getBoundingSphere()->getRadius()));
 	astroMoving2[0] = new Geometry("amongus_astro_moving2.obj", 0.5f, 1.0f, astroMaterial[0]);
-	astroMoving2[0]->setAppearanceTime(0.0f);
 	astroMoving2[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[0]->getBoundingSphere()->getCenter().x, astroMoving2[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[0]->getBoundingSphere()->getCenter().z + 8.0f), astroMoving2[0]->getBoundingSphere()->getRadius()));
 	currAstro[0] = astroStill[0];
 	astroTransform[0]->addChild(currAstro[0]);
@@ -205,6 +202,9 @@ bool Window::initializeObjects()
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 15 + 1);
 		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
 		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 90 + 1);
+		astroStill[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1]);
+		astroMoving1[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1]);
+		astroMoving2[i]->setDisappearanceTime(timeUntilNonplayerDisappears[i-1]);
 		nonplayerIdx[i-1] = -1;
 	}
 	startingTime = glfwGetTime();

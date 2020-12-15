@@ -25,13 +25,16 @@ private:
 
 	GLuint VAO, VBO, TBO, NBO, EBO, lobbyTexture;
 	
-	GLfloat appearanceTime, drawAstro;
+	GLfloat drawAstro;
 	
 	Material* material;
 
 	BoundingSphere* boundingSphere;
 
+	GLfloat appearanceTime;
 	ParticleSystem* appearanceEffect;
+
+	GLfloat disappearanceTime;
 	ParticleSystem* disappearanceEffect;
 
 public:
@@ -42,6 +45,7 @@ public:
 	void update();
 
 	void setAppearanceTime(GLfloat appearanceTime);
+	void setDisappearanceTime(GLfloat disaappearanceTime);
 	void updateBoundingSphere(BoundingSphere* boundingSphere);
 	BoundingSphere* getBoundingSphere();
 };

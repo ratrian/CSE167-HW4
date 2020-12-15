@@ -6,16 +6,12 @@
 in float sampleExtraOutput;
 
 uniform float life;
-uniform float timePassed;
 
 // You can output many things. The first vec4 type output determines the color of the fragment
 out vec4 fragColor;
 
 void main()
 {
-    if (timePassed < life)
-    {
-        // Use the color passed in. An alpha of 1.0f means it is not transparent.
-        fragColor = vec4(vec3(1.0f), sampleExtraOutput);
-    }
+    // Use the color passed in. An alpha of 1.0f means it is not transparent.
+    fragColor = vec4(vec3(1.0f), sampleExtraOutput);
 }

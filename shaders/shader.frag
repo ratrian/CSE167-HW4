@@ -3,7 +3,6 @@
 uniform float drawDiscoball;
 uniform float drawLightSource;
 uniform float drawAstro;
-uniform float noParticleEffect;
 
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -52,13 +51,11 @@ void main()
             vec3 result = CalcDirLight(norm, viewDir);
             if (drawAstro == 1.0)
             {
-                if (noParticleEffect == 1.0) {
-                    float edge = max(0, dot(norm, viewDir));
-                    if (edge < 0.01)
-                        fragColor = vec4(0.0);
-                    else
-                        fragColor = vec4(result, 1.0);
-                }
+                float edge = max(0, dot(norm, viewDir));
+                if (edge < 0.01)
+                    fragColor = vec4(0.0);
+                else
+                    fragColor = vec4(result, 1.0);
             }
             else if (drawAstro == 0.0)
                 fragColor = vec4(result, 1.0);

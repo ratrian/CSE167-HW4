@@ -259,7 +259,6 @@ void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawLightSource"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawAstro"), drawAstro);
-	glUniform1f(glGetUniformLocation(shaderProgram, "noParticleEffect"), 1.0);
 	material->sendMatToShader(shaderProgram);
 
 	// Bind the VAO
@@ -276,6 +275,9 @@ void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat
 
 	// Unbind the shader program
 	glUseProgram(0);
+
+	//appearanceEffect->draw(particleShaderProgram, currModel, currTime - appearanceTime);
+	//disappearanceEffect->draw(particleShaderProgram, currModel, currTime - disappearanceTime);
 }
 
 void Geometry::update()
@@ -286,6 +288,11 @@ void Geometry::update()
 void Geometry::setAppearanceTime(GLfloat appearanceTime)
 {
 	Geometry::appearanceTime = appearanceTime;
+}
+
+void Geometry::setDisappearanceTime(GLfloat disaappearanceTime)
+{
+	Geometry::disappearanceTime = disaappearanceTime;
 }
 
 void Geometry::updateBoundingSphere(BoundingSphere* boundingSphere)
