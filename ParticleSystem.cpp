@@ -51,7 +51,6 @@ void ParticleSystem::draw(GLuint shaderProgram, glm::mat4 model, GLfloat timePas
 		// Get the particle shader variable locations and send the uniform data to the shader 
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(shaderProgram, "life"), PARTICLE_LIFE);
-		glUniform1f(glGetUniformLocation(shaderProgram, "timePassed"), timePassed);
 
 		// Bind the VAO
 		glBindVertexArray(VAO);
