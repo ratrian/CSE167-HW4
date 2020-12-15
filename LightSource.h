@@ -32,7 +32,7 @@ public:
 	LightSource(std::string objFilename, PointLight* pointLight);
 	~LightSource();
 
-	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C);
+	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime);
 	void update();
 	void orbit(glm::vec3 direction, float rotAngle, glm::vec3 rotAxis);
 	void translate(glm::vec3 t);

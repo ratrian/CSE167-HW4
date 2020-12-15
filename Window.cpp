@@ -47,8 +47,6 @@ BoundingPlane* Window::wallBoundingPlane[6];
 Cube* Window::skybox;
 Sphere* Window::discoball;
 
-GLfloat pointSize;
-
 // Camera Matrices
 // Projection matrix:
 glm::mat4 Window::projection;
@@ -100,9 +98,7 @@ bool Window::initializeProgram() {
 }
 
 bool Window::initializeObjects()
-{
-	pointSize = 30.0;
-	
+{	
 	dirLight = new DirLight(glm::vec3(0.0, -3.0, -6.0), glm::vec3(0.7, 0.7, 0.7));
 	pointLight = new PointLight(glm::vec3(-3.0, -5.0, -6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
 	lightSource = new LightSource("sphere.obj", pointLight);
@@ -111,7 +107,7 @@ bool Window::initializeObjects()
 	lobbyTransform = new Transform();
 	lobbyTransform->rotate(glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
 	lobbyMaterial = new Material(glm::vec3(0.1, 0.1, 0.1), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
-	lobby = new Geometry("amongus_lobby.obj", 0.5f, pointSize, 0.0f, lobbyMaterial);
+	lobby = new Geometry("amongus_lobby.obj", 0.5f, 0.0f, lobbyMaterial);
 	lobbyTransform->addChild(lobby);
 
 	// Set up astronauts.
@@ -134,24 +130,27 @@ bool Window::initializeObjects()
 	astroMaterial[8] = new Material(glm::vec3(214.0f/255.0f, 223.0f/255.0f, 241.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	astroMaterial[9] = new Material(glm::vec3(246.0f/255.0f, 246.0f/255.0f, 87.0f/255.0f), glm::vec3(0.61424, 0.04136, 0.04136), glm::vec3(0.727811, 0.626959, 0.626959), 0.6);
 	
-	astroStill[0] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[0]);
+	astroStill[0] = new Geometry("amongus_astro_still.obj", 0.5f, 1.0f, astroMaterial[0]);
+	astroStill[0]->setAppearanceTime(0.0f);
 	astroStill[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[0]->getBoundingSphere()->getCenter().x, astroStill[0]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[0]->getBoundingSphere()->getCenter().z + 8.0f), astroStill[0]->getBoundingSphere()->getRadius()));
-	astroMoving1[0] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, 1.0f, astroMaterial[0]);
+	astroMoving1[0] = new Geometry("amongus_astro_moving1.obj", 0.5f, 1.0f, astroMaterial[0]);
+	astroMoving1[0]->setAppearanceTime(0.0f);
 	astroMoving1[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[0]->getBoundingSphere()->getCenter().x, astroMoving1[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving1[0]->getBoundingSphere()->getCenter().z + 8.0f), astroMoving1[0]->getBoundingSphere()->getRadius()));
-	astroMoving2[0] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, 1.0f, astroMaterial[0]);
+	astroMoving2[0] = new Geometry("amongus_astro_moving2.obj", 0.5f, 1.0f, astroMaterial[0]);
+	astroMoving2[0]->setAppearanceTime(0.0f);
 	astroMoving2[0]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[0]->getBoundingSphere()->getCenter().x, astroMoving2[0]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[0]->getBoundingSphere()->getCenter().z + 8.0f), astroMoving2[0]->getBoundingSphere()->getRadius()));
 	currAstro[0] = astroStill[0];
 	astroTransform[0]->addChild(currAstro[0]);
 	currAstroAppeared[0] = true;
 	currAstroFacingDir[0] = "south";
 	for (unsigned i = 1; i < 10; i++) {
-		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
+		astroStill[i] = new Geometry("amongus_astro_still.obj", 0.5f, 1.0f, astroMaterial[i]);
 		astroStill[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroStill[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroStill[i]->getBoundingSphere()->getCenter().y - 3.0f, astroStill[i]->getBoundingSphere()->getCenter().z), astroStill[i]->getBoundingSphere()->getRadius()));
 
-		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
+		astroMoving1[i] = new Geometry("amongus_astro_moving1.obj", 0.5f, 1.0f, astroMaterial[i]);
 		astroMoving1[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving1[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroMoving1[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving1[i]->getBoundingSphere()->getCenter().z), astroMoving1[i]->getBoundingSphere()->getRadius()));
 
-		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, pointSize, 1.0f, astroMaterial[i]);
+		astroMoving2[i] = new Geometry("amongus_astro_moving2.obj", 0.5f, 1.0f, astroMaterial[i]);
 		astroMoving2[i]->updateBoundingSphere(new BoundingSphere(glm::vec3(astroMoving2[i]->getBoundingSphere()->getCenter().x - 16.5f + float(i * 3.5), astroMoving2[i]->getBoundingSphere()->getCenter().y - 3.0f, astroMoving2[i]->getBoundingSphere()->getCenter().z), astroMoving2[i]->getBoundingSphere()->getRadius()));
 
 		currAstro[i] = astroStill[i];
@@ -199,6 +198,9 @@ bool Window::initializeObjects()
 			astroTransform[i]->rotate(0.7818f, glm::vec3(0.0f, 1.0f, 0.0f));
 		}
 		timeUntilNonplayerAppears[i-1] = rand() % 30;
+		astroStill[i]->setAppearanceTime(timeUntilNonplayerAppears[i-1]);
+		astroMoving1[i]->setAppearanceTime(timeUntilNonplayerAppears[i-1]);
+		astroMoving2[i]->setAppearanceTime(timeUntilNonplayerAppears[i-1]);
 		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 10 + 1);
 		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 15 + 1);
 		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
@@ -1208,7 +1210,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUseProgram(0);
-	lobbyTransform->draw(shaderProgram, particleShaderProgram, glm::mat4(1.0));
+	lobbyTransform->draw(shaderProgram, particleShaderProgram, glm::mat4(1.0), glfwGetTime());
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

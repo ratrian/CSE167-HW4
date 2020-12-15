@@ -112,7 +112,7 @@ LightSource::~LightSource()
 	glDeleteVertexArrays(1, &VAO);
 }
 
-void LightSource::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C)
+void LightSource::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime)
 {
 	glm::mat4 currModel = C * model;
 

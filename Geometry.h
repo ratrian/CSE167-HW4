@@ -25,7 +25,7 @@ private:
 
 	GLuint VAO, VBO, TBO, NBO, EBO, lobbyTexture;
 	
-	GLfloat pointSize, drawAstro;
+	GLfloat appearanceTime, drawAstro;
 	
 	Material* material;
 
@@ -35,13 +35,13 @@ private:
 	ParticleSystem* disappearanceEffect;
 
 public:
-	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat drawAstro, Material* material);
+	Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat drawAstro, Material* material);
 	~Geometry();
 	
-	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C);
+	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime);
 	void update();
 
-	void updatePointSize(GLfloat size);
+	void setAppearanceTime(GLfloat appearanceTime);
 	void updateBoundingSphere(BoundingSphere* boundingSphere);
 	BoundingSphere* getBoundingSphere();
 };

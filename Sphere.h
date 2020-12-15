@@ -28,7 +28,7 @@ class Sphere : public Node {
 		Sphere(glm::vec3 eyePos);
 		~Sphere();
 
-		void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C);
+		void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime);
 		void update();
 		void spin(float deg);
 };

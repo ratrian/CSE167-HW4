@@ -14,7 +14,6 @@ layout (location = 2) in vec3 normal;
 uniform mat4 model;
 uniform mat4 projection;
 uniform mat4 view;
-uniform float pointSize;
 
 // Outputs of the vertex shader are the inputs of the same name of the fragment shader.
 // The default output, gl_Position, should be assigned something. You can define as many
@@ -28,7 +27,6 @@ void main()
     // OpenGL maintains the D matrix so you only need to multiply by P, V (aka C inverse), and M
     posOutput = vec3(model * vec4(position, 1.0));
     gl_Position = projection * view * vec4(posOutput, 1.0);
-    gl_PointSize = pointSize - gl_Position.z;
     texcoordOutput = texcoord;
     normalOutput = mat3(transpose(inverse(model))) * normal;
 }

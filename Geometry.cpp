@@ -1,8 +1,8 @@
 #include "Geometry.h"
 #include "stb_image.h"
 
-Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat pointSize, GLfloat drawAstro, Material* material)
-	: pointSize(pointSize), drawAstro(drawAstro), material(material)
+Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat drawAstro, Material* material)
+	: drawAstro(drawAstro), material(material)
 {
 	/*
 	 * TODO: Section 2: Currently, all the points are hard coded below.
@@ -246,7 +246,7 @@ Geometry::~Geometry()
 	delete disappearanceEffect;
 }
 
-void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C)
+void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime)
 {
 	glm::mat4 currModel = C * model;
 
@@ -255,7 +255,6 @@ void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat
 
 	// Get the shader variable locations and send the uniform data to the shader 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(currModel));
-	glUniform1f(glGetUniformLocation(shaderProgram, "pointSize"), pointSize);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawAstro"), drawAstro);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawLightSource"), 0.0);
@@ -284,12 +283,9 @@ void Geometry::update()
 
 }
 
-void Geometry::updatePointSize(GLfloat size) 
+void Geometry::setAppearanceTime(GLfloat appearanceTime)
 {
-	/*
-	 * TODO: Section 3: Implement this function to adjust the point size.
-	 */
-	pointSize = size;
+	Geometry::appearanceTime = appearanceTime;
 }
 
 void Geometry::updateBoundingSphere(BoundingSphere* boundingSphere)
