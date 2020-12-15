@@ -19,11 +19,11 @@ void Transform::removeChild(unsigned idx)
 	children.erase(it);
 }
 
-void Transform::draw(GLuint shaderProgram, glm::mat4 C)
+void Transform::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C)
 {
 	std::list<Node*>::iterator it;
 	for (it = children.begin(); it != children.end(); it++) {
-		(*it)->draw(shaderProgram, M * C * mT * mR);
+		(*it)->draw(shaderProgram, particleShaderProgram, M * C * mT * mR);
 	}
 }
 

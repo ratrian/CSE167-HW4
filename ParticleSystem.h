@@ -34,7 +34,7 @@ private:
 	GLuint VAO, VBO;
 
 public:
-	ParticleSystem(glm::vec3 geometryPositionData[], bool appear);
+	ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool appear);
 	~ParticleSystem();
 
 	void draw(GLuint shaderProgram, glm::mat4 model, GLfloat timePassed);

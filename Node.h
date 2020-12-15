@@ -14,7 +14,7 @@
 class Node
 {
 public:
-	virtual void draw(GLuint shaderProgram, glm::mat4 C) = 0;
+	virtual void draw(GLuint shaderProgram, GLuint particleShaderProgrma, glm::mat4 C) = 0;
 	virtual void update() = 0;
 };
 

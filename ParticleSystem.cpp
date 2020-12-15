@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(glm::vec3 geometryPositionData[], bool appear) : appear(appear)
+ParticleSystem::ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool appear) : appear(appear)
 {
 	for (unsigned i = 0; i < MAX_PARTICLES; i++)
 	{
@@ -43,6 +43,9 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::draw(GLuint shaderProgram, glm::mat4 model, GLfloat timePassed)
 {
+	// Actiavte the particle shader program 
+	glUseProgram(shaderProgram);
+
 	// Get the particle shader variable locations and send the uniform data to the shader 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1f(glGetUniformLocation(shaderProgram, "life"), PARTICLE_LIFE);
@@ -59,6 +62,9 @@ void ParticleSystem::draw(GLuint shaderProgram, glm::mat4 model, GLfloat timePas
 
 	// Unbind the VAO and particle shader program
 	glBindVertexArray(0);
+
+	// Unbind the shader program
+	glUseProgram(0);
 }
 
 void ParticleSystem::update(float deltaTime)

@@ -1207,14 +1207,8 @@ void Window::displayCallback(GLFWwindow* window)
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	lobbyTransform->draw(shaderProgram, glm::mat4(1.0));
 	glUseProgram(0);
-
-	glUseProgram(particleShaderProgram);
-	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-	//
-	glUseProgram(0);
+	lobbyTransform->draw(shaderProgram, particleShaderProgram, glm::mat4(1.0));
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

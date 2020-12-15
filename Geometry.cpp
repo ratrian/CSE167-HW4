@@ -246,9 +246,12 @@ Geometry::~Geometry()
 	delete disappearanceEffect;
 }
 
-void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
+void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C)
 {
 	glm::mat4 currModel = C * model;
+
+	// Actiavte the shader program 
+	glUseProgram(shaderProgram);
 
 	// Get the shader variable locations and send the uniform data to the shader 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(currModel));
@@ -256,6 +259,8 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawAstro"), drawAstro);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawDiscoball"), 0.0);
 	glUniform1f(glGetUniformLocation(shaderProgram, "drawLightSource"), 0.0);
+	glUniform1f(glGetUniformLocation(shaderProgram, "drawAstro"), drawAstro);
+	glUniform1f(glGetUniformLocation(shaderProgram, "noParticleEffect"), 1.0);
 	material->sendMatToShader(shaderProgram);
 
 	// Bind the VAO
@@ -267,8 +272,11 @@ void Geometry::draw(GLuint shaderProgram, glm::mat4 C)
 	// Draw the points using triangles, indexed with the EBO
 	glDrawElements(GL_TRIANGLES, sizeof(glm::vec3) * points.size(), GL_UNSIGNED_INT, 0);
 
-	// Unbind the VAO and shader program
+	// Unbind the VAO
 	glBindVertexArray(0);
+
+	// Unbind the shader program
+	glUseProgram(0);
 }
 
 void Geometry::update()

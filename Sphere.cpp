@@ -119,7 +119,7 @@ Sphere::~Sphere()
     glDeleteVertexArrays(1, &vao);
 }
 
-void Sphere::draw(GLuint shaderProgram, glm::mat4 C)
+void Sphere::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C)
 {
     glm::mat4 currModel = C * model;
 

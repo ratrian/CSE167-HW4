@@ -38,7 +38,7 @@ public:
 	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat drawAstro, Material* material);
 	~Geometry();
 	
-	void draw(GLuint shaderProgram, glm::mat4 C);
+	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C);
 	void update();
 
 	void updatePointSize(GLfloat size);
