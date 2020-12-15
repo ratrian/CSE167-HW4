@@ -42,7 +42,7 @@ public:
 	~Geometry();
 	
 	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime);
-	void update();
+	void update(float deltaTime);
 
 	void setAppearanceTime(GLfloat appearanceTime);
 	void setDisappearanceTime(GLfloat disaappearanceTime);

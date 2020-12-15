@@ -278,14 +278,15 @@ void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat
 
 	if (drawAstro == 1.0)
 	{
-		//appearanceEffect->draw(particleShaderProgram, currModel, currTime - appearanceTime);
+		appearanceEffect->draw(particleShaderProgram, currModel, currTime - appearanceTime);
 		//disappearanceEffect->draw(particleShaderProgram, currModel, currTime - disappearanceTime);
 	}
 }
 
-void Geometry::update()
+void Geometry::update(float deltaTime)
 {
-
+	appearanceEffect->update(deltaTime);
+	//disappearanceEffect->update(deltaTime);
 }
 
 void Geometry::setAppearanceTime(GLfloat appearanceTime)

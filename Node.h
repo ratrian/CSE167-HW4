@@ -15,7 +15,7 @@ class Node
 {
 public:
 	virtual void draw(GLuint shaderProgram, GLuint particleShaderProgrma, glm::mat4 C, GLfloat currTime) = 0;
-	virtual void update() = 0;
+	virtual void update(float deltaTime) = 0;
 };
 
 #endif

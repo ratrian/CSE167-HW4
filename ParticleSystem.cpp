@@ -5,9 +5,9 @@ ParticleSystem::ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool
 	for (unsigned i = 0; i < MAX_PARTICLES; i++)
 	{
 		if (appear)
-			positionData.push_back(geometryPositionData[i] + glm::vec3(rand() % 5));
+			positionData.push_back(geometryPositionData[i] + glm::vec3(0.01f * (rand() % 2), -0.4f, 0.01f * (rand() % 2)));
 		else
-			positionData.push_back(geometryPositionData[i] - glm::vec3(rand() % 5));
+			positionData.push_back(geometryPositionData[i] - glm::vec3(0.01f * (rand() % 2), -0.4f, 0.01f * (rand() % 2)));
 
 		particles[i].velocity = glm::vec3(0.01f);
 		particles[i].life = PARTICLE_LIFE;
@@ -56,7 +56,7 @@ void ParticleSystem::draw(GLuint shaderProgram, glm::mat4 model, GLfloat timePas
 		glBindVertexArray(VAO);
 
 		// Set point size
-		glPointSize(5);
+		glPointSize(2);
 
 		// Draw the points 
 		glDrawArrays(GL_POINTS, 0, positionData.size());

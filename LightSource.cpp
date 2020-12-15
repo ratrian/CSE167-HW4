@@ -132,7 +132,7 @@ void LightSource::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::
 	glBindVertexArray(0);
 }
 
-void LightSource::update()
+void LightSource::update(float deltaTime)
 {
 
 }

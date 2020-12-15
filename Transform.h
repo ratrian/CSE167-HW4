@@ -17,7 +17,7 @@ public:
 	void addChild(Node* child);
 	void removeChild(unsigned idx);
 	void draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime);
-	void update();
+	void update(float deltaTime);
 	void translate(glm::vec3 t);
 	void rotate(float rotAngle, glm::vec3 rotAxis);
 };

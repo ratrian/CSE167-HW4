@@ -342,8 +342,6 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here
-	discoball->update();
-	
 	float currTime = glfwGetTime();
 	for (unsigned i = 1; i < 10; i++) {
 		if (currTime - startingTime >= timeUntilNonplayerAppears[i-1] && currTime - startingTime < timeUntilNonplayerStartsWalking[i-1])
@@ -1214,7 +1212,7 @@ void Window::displayCallback(GLFWwindow* window)
 	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUseProgram(0);
-	lobbyTransform->draw(shaderProgram, particleShaderProgram, glm::mat4(1.0), glfwGetTime());
+	lobbyTransform->draw(shaderProgram, particleShaderProgram, glm::mat4(1.0), glfwGetTime() - startingTime);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
 	glfwPollEvents();

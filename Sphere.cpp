@@ -138,7 +138,7 @@ void Sphere::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 
     glBindVertexArray(0);
 }
 
-void Sphere::update()
+void Sphere::update(float deltaTime)
 {
     // Spin the sphere by 1 degree.
     spin(0.1f);
