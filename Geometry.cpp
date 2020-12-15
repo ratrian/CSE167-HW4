@@ -164,7 +164,7 @@ Geometry::Geometry(std::string objFilename, GLfloat scaleFactor, GLfloat drawAst
 	boundingSphere = new BoundingSphere(glm::vec3(centX, centY, centZ), 0.8f * maxDist);
 
 	appearanceEffect = new ParticleSystem(points, true);
-	appearanceEffect = new ParticleSystem(points, false);
+	disappearanceEffect = new ParticleSystem(points, false);
 
 	// Generate a Vertex Array (VAO) and bind to it
 	glGenVertexArrays(1, &VAO);
@@ -279,14 +279,14 @@ void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat
 	if (drawAstro == 1.0)
 	{
 		appearanceEffect->draw(particleShaderProgram, currModel, currTime - appearanceTime);
-		//disappearanceEffect->draw(particleShaderProgram, currModel, currTime - disappearanceTime);
+		disappearanceEffect->draw(particleShaderProgram, currModel, currTime - disappearanceTime);
 	}
 }
 
 void Geometry::update(float deltaTime)
 {
 	appearanceEffect->update(deltaTime);
-	//disappearanceEffect->update(deltaTime);
+	disappearanceEffect->update(deltaTime);
 }
 
 void Geometry::setAppearanceTime(GLfloat appearanceTime)
