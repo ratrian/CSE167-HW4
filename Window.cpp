@@ -40,6 +40,7 @@ float Window::timeUntilNonplayerDisappears[9];
 int nonplayerIdx[9];
 unsigned numNonplayers = 0;
 float startingTime;
+float deltaTime = 0.0f;
 
 BoundingSphere* Window::boxBoundingSphere[2];
 BoundingPlane* Window::wallBoundingPlane[6];
@@ -342,6 +343,9 @@ void Window::resizeCallback(GLFWwindow* window, int width, int height)
 void Window::idleCallback()
 {
 	// Perform any necessary updates here
+	deltaTime = glfwGetTime() - deltaTime;
+	lobbyTransform->update(deltaTime);
+
 	float currTime = glfwGetTime();
 	for (unsigned i = 1; i < 10; i++) {
 		if (currTime - startingTime >= timeUntilNonplayerAppears[i-1] && currTime - startingTime < timeUntilNonplayerStartsWalking[i-1])

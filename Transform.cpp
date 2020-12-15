@@ -29,8 +29,6 @@ void Transform::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::ma
 
 void Transform::update(float deltaTime)
 {
-	rotate(0.0002f, glm::vec3(0.0f, 1.0f, 0.0f));
-
 	std::list<Node*>::iterator it;
 	for (it = children.begin(); it != children.end(); it++) {
 		(*it)->update(deltaTime);
