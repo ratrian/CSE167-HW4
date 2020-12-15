@@ -4,6 +4,7 @@
 #include "Node.h"
 #include "Material.h"
 #include "BoundingSphere.h"
+#include "ParticleSystem.h"
 
 #include <string>
 #include <vector>
@@ -25,9 +26,13 @@ private:
 	GLuint VAO, VBO, TBO, NBO, EBO, lobbyTexture;
 	
 	GLfloat pointSize, drawAstro;
+	
 	Material* material;
 
 	BoundingSphere* boundingSphere;
+
+	ParticleSystem* appearance;
+	ParticleSystem* disappearance;
 
 public:
 	Geometry(std::string objFilename, GLfloat scaleFactor,  GLfloat pointSize, GLfloat drawAstro, Material* material);
