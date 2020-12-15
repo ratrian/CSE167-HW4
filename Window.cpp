@@ -1211,8 +1211,8 @@ void Window::displayCallback(GLFWwindow* window)
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUseProgram(0);
 	glUseProgram(particleShaderProgram);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUseProgram(0);
 	lobbyTransform->draw(shaderProgram, particleShaderProgram, glm::mat4(1.0), glfwGetTime());
 

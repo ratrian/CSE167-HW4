@@ -4,15 +4,14 @@ ParticleSystem::ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool
 {
 	for (unsigned i = 0; i < MAX_PARTICLES; i++)
 	{
-		positionData.push_back(geometryPositionData[i]);
+		if (appear)
+			positionData.push_back(geometryPositionData[i] + glm::vec3(rand() % 5));
+		else
+			positionData.push_back(geometryPositionData[i] - glm::vec3(rand() % 5));
 
 		particles[i].velocity = glm::vec3(0.01f);
 		particles[i].life = PARTICLE_LIFE;
 		srand(i);
-		if (appear)
-			particles[i].position = positionData[i] + glm::vec3(rand() % 200);
-		else
-			particles[i].position = positionData[i] - glm::vec3(rand() % 200);
 	}
 
 	// Generate a Vertex Array (VAO) and Vertex Buffer Object (VBO)
@@ -25,7 +24,9 @@ ParticleSystem::ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool
 	// Bind VBO to the bound VAO, and store the point data
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * positionData.size(), positionData.data(), GL_STATIC_DRAW);
-	// Enable Vertex Attribute 0 to pass point data through to the particle shader
+	// Enable Vertex Attribute 0 to pass point data through to the particle 
+
+
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
@@ -43,20 +44,19 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::draw(GLuint shaderProgram, glm::mat4 model, GLfloat timePassed)
 {
-	if (timePassed > 0 && timePassed <= 3.0f)
+	if (timePassed > 0.0f && timePassed <= 3.0f)
 	{
 		// Actiavte the particle shader program 
 		glUseProgram(shaderProgram);
 
 		// Get the particle shader variable locations and send the uniform data to the shader 
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(shaderProgram, "life"), PARTICLE_LIFE);
 
 		// Bind the VAO
 		glBindVertexArray(VAO);
 
 		// Set point size
-		glPointSize(30);
+		glPointSize(5);
 
 		// Draw the points 
 		glDrawArrays(GL_POINTS, 0, positionData.size());
@@ -79,9 +79,9 @@ void ParticleSystem::update(float deltaTime)
 		{
 			particles[i].life -= deltaTime;
 			if (appear)
-				particles[i].position -= deltaTime * particles[i].velocity;
+				positionData[i] -= deltaTime * particles[i].velocity;
 			else
-				particles[i].position += deltaTime * particles[i].velocity;
+				positionData[i] += deltaTime * particles[i].velocity;
 		}
 	}
 }

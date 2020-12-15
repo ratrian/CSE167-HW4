@@ -249,7 +249,7 @@ Geometry::~Geometry()
 void Geometry::draw(GLuint shaderProgram, GLuint particleShaderProgram, glm::mat4 C, GLfloat currTime)
 {
 	glm::mat4 currModel = C * model;
-
+	
 	// Actiavte the shader program 
 	glUseProgram(shaderProgram);
 

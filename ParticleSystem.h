@@ -19,7 +19,7 @@ class ParticleSystem
 {
 private:
 	struct Particle {
-		glm::vec3 position, velocity;
+		glm::vec3 velocity;
 		float life;
 	};
 
