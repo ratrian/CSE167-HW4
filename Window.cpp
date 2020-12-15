@@ -198,11 +198,11 @@ bool Window::initializeObjects()
 			currAstroFacingDir[i] = "southeast";
 			astroTransform[i]->rotate(0.7818f, glm::vec3(0.0f, 1.0f, 0.0f));
 		}
-		timeUntilNonplayerAppears[i-1] = rand() % 20;
-		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 5 + 1);
-		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 10 + 1);
-		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 5 + 1);
-		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 60 + 1);
+		timeUntilNonplayerAppears[i-1] = rand() % 30;
+		timeUntilNonplayerStartsWalking[i-1] = timeUntilNonplayerAppears[i-1] + (rand() % 10 + 1);
+		timeUntilNonplayerStopsWalking[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 15 + 1);
+		timeUntilNonplayerRestartsWalking[i-1] = timeUntilNonplayerStopsWalking[i-1] + (rand() % 10 + 1);
+		timeUntilNonplayerDisappears[i-1] = timeUntilNonplayerStartsWalking[i-1] + (rand() % 90 + 1);
 		nonplayerIdx[i-1] = -1;
 	}
 	startingTime = glfwGetTime();
@@ -1208,6 +1208,12 @@ void Window::displayCallback(GLFWwindow* window)
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	lobbyTransform->draw(shaderProgram, glm::mat4(1.0));
+	glUseProgram(0);
+
+	glUseProgram(particleShaderProgram);
+	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(particleShaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	//
 	glUseProgram(0);
 
 	// Gets events, including input such as keyboard and mouse or window resizing
