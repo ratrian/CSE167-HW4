@@ -16,6 +16,6 @@ void main()
     if (timePassed < life)
     {
         // Use the color passed in. An alpha of 1.0f means it is not transparent.
-        fragColor = vec4(1.0f, sampleExtraOutput);
+        fragColor = vec4(vec3(1.0f), sampleExtraOutput);
     }
 }

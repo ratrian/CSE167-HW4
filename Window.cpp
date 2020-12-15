@@ -76,6 +76,16 @@ bool Window::initializeProgram() {
 		return false;
 	}
 
+	// Create a particle shader program with a vertex shader and a fragment shader.
+	particleShaderProgram = LoadShaders("shaders/particle.vert", "shaders/particle.frag");
+
+	// Check the particle shader program.
+	if (!particleShaderProgram)
+	{
+		std::cerr << "Failed to initialize particle shader program" << std::endl;
+		return false;
+	}
+
 	// Create a skybox shader program with a vertex shader and a fragment shader.
 	skyboxShaderProgram = LoadShaders("shaders/skybox.vert", "shaders/skybox.frag");
 
