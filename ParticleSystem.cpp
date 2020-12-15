@@ -7,7 +7,7 @@ ParticleSystem::ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool
 		if (appear)
 			positionData.push_back(geometryPositionData[i] + glm::vec3(0.01f * (rand() % 2), 2.0f, 0.01f * (rand() % 2)));
 		else
-			positionData.push_back(geometryPositionData[i] - glm::vec3(0.01f * (rand() % 2), 2.0f, 0.01f * (rand() % 2)));
+			positionData.push_back(geometryPositionData[MAX_PARTICLES + i] - glm::vec3(0.01f * (rand() % 2), 2.0f, 0.01f * (rand() % 2)));
 
 		particles[i].velocity = glm::vec3(0.1f);
 		particles[i].life = PARTICLE_LIFE;
