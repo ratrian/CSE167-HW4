@@ -24,8 +24,6 @@ ParticleSystem::ParticleSystem(std::vector<glm::vec3> geometryPositionData, bool
 	// Bind VBO to the bound VAO, and store the point data
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * positionData.size(), positionData.data(), GL_STATIC_DRAW);
-	// Enable Vertex Attribute 0 to pass point data through to the particle 
-
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
@@ -74,7 +72,9 @@ void ParticleSystem::update(float deltaTime)
 	for (unsigned i = 0; i < MAX_PARTICLES; i++)
 	{
 		if (particles[i].life < 0)
+		{
 			particles[i].life = 0;
+		}
 		else if (particles[i].life > 0)
 		{
 			particles[i].life -= deltaTime;
@@ -82,7 +82,14 @@ void ParticleSystem::update(float deltaTime)
 				positionData[i] -= deltaTime * particles[i].velocity;
 			}
 			else
+			{
 				positionData[i] += deltaTime * particles[i].velocity;
+			}
 		}
 	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * positionData.size(), positionData.data(), GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
