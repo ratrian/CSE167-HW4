@@ -73,8 +73,11 @@ vec3 CalcDirLight(vec3 normal, vec3 viewDir)
     vec3 reflectDir = reflect(-unitLightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
 
+    vec3 color;
     if (drawAstro == 1.0) {
-        vec3 color = ambient * lightCol.x + diffuse * diff * lightCol.y + specular * spec * lightCol.z;
+        color.x = ambient.x + lightCol.x * (diff * diffuse.x + spec * specular.x);
+        color.y = ambient.y + lightCol.y * (diff * diffuse.y + spec * specular.y);
+        color.z = ambient.z + lightCol.z * (diff * diffuse.z + spec * specular.z);
         float intensity = diff * spec;
         if (intensity > 0.95)
         {
@@ -102,7 +105,9 @@ vec3 CalcDirLight(vec3 normal, vec3 viewDir)
         }
         return color;
     }
-    vec3 color = ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) + specular * spec * lightCol.z;
+    color.x = ambient.x + lightCol.x * (vec3(texture(lobbyTexture, texcoordOutput)).x + spec * specular.x);
+    color.y = ambient.y + lightCol.y * (vec3(texture(lobbyTexture, texcoordOutput)).y + spec * specular.y);
+    color.z = ambient.z + lightCol.z * (vec3(texture(lobbyTexture, texcoordOutput)).z + spec * specular.z);
     return color;
 }
 
@@ -117,10 +122,13 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     // Attenuation
     float distance = length(lightPos - fragPos);
-    float attenuation = 1.0f / (lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance);
+    float attenuation = lightAtten.x + lightAtten.y * distance + lightAtten.z * distance * distance;
 
+    vec3 color;
     if (drawAstro == 1.0) {
-        vec3 color = ambient * lightCol.x + diffuse * diff * lightCol.y * attenuation + specular * spec * lightCol.z * attenuation;
+        color.x = ambient.x + (lightCol.x / attenuation) * (diff * diffuse.x + spec * specular.x);
+        color.y = ambient.y + (lightCol.y / attenuation) * (diff * diffuse.y + spec * specular.y);
+        color.z = ambient.z + (lightCol.z / attenuation) * (diff * diffuse.z + spec * specular.z);
         float intensity = diff * spec;
         if (intensity > 0.95)
         {
@@ -148,6 +156,8 @@ vec3 CalcPointLight(vec3 fragPos, vec3 normal, vec3 viewDir)
         }
         return color;
     }
-    vec3 color = ambient * lightCol.x + vec3(texture(lobbyTexture, texcoordOutput)) + specular * spec * lightCol.z * attenuation;
+    color.x = ambient.x + (lightCol.x / attenuation) * (vec3(texture(lobbyTexture, texcoordOutput)).x + spec * specular.x);
+    color.y = ambient.y + (lightCol.y / attenuation) * (vec3(texture(lobbyTexture, texcoordOutput)).y + spec * specular.y);
+    color.z = ambient.z + (lightCol.z / attenuation) * (vec3(texture(lobbyTexture, texcoordOutput)).z + spec * specular.z);
     return color;
 }

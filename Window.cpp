@@ -100,7 +100,7 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects()
 {	
 	dirLight = new DirLight(glm::vec3(0.0, -3.0, -6.0), glm::vec3(0.7, 0.7, 0.7));
-	pointLight = new PointLight(glm::vec3(-3.0, -5.0, -6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(-0.05, 0.9, 0.0));
+	pointLight = new PointLight(glm::vec3(-3.0, -5.0, -6.0), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 0.1, 0.01));
 	lightSource = new LightSource("sphere.obj", pointLight);
 
 	// Set up lobby.
